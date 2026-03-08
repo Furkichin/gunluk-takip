@@ -239,6 +239,127 @@ body {
 @keyframes fromTop  { from{opacity:0;transform:translateY(-14px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fromUp   { from{opacity:0;transform:translateY(16px)}  to{opacity:1;transform:translateY(0)} }
 
+/* ═══════════════════════════════════════════
+   ADD HABIT MODAL
+═══════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  z-index: 5000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 32px 32px 28px;
+  width: 420px; max-width: 92vw;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(.4,2,.4,1);
+}
+.modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+.modal-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 24px; display:flex; align-items:center; gap:10px; }
+.modal-field { margin-bottom: 16px; }
+.modal-label { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 7px; }
+.modal-input {
+  width: 100%; background: var(--panel2); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 11px 14px;
+  color: var(--text); font-size: 14px; font-family: 'DM Sans',sans-serif;
+  outline: none; transition: border-color 0.2s;
+}
+.modal-input:focus { border-color: var(--guitar); }
+.emoji-grid {
+  display: grid; grid-template-columns: repeat(8,1fr); gap: 6px;
+}
+.emoji-btn {
+  font-size: 20px; padding: 8px 0; border-radius: 10px;
+  background: var(--panel2); border: 2px solid transparent;
+  cursor: pointer; transition: background 0.15s, border-color 0.15s;
+  text-align: center;
+}
+.emoji-btn:hover { background: var(--border); }
+.emoji-btn.selected { border-color: var(--guitar); background: rgba(167,139,250,0.15); }
+.color-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.color-swatch {
+  width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  border: 3px solid transparent; transition: border-color 0.15s, transform 0.15s;
+}
+.color-swatch:hover { transform: scale(1.12); }
+.color-swatch.selected { border-color: white; transform: scale(1.12); }
+.modal-actions { display: flex; gap: 10px; margin-top: 24px; }
+.btn-modal-cancel {
+  flex: 1; padding: 12px; border-radius: 12px; border: 1.5px solid var(--border);
+  background: transparent; color: var(--muted); font-size: 14px; font-weight: 700;
+  font-family: 'DM Sans',sans-serif; cursor: pointer; transition: background 0.2s;
+}
+.btn-modal-cancel:hover { background: var(--panel2); }
+.btn-modal-save {
+  flex: 2; padding: 12px; border-radius: 12px; border: none;
+  background: linear-gradient(135deg,var(--guitar),#6D28D9); color: white;
+  font-size: 14px; font-weight: 700; font-family: 'DM Sans',sans-serif;
+  cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+}
+.btn-modal-save:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* Add habit button (PC) */
+.btn-add-habit {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--panel); border: 2px dashed rgba(167,139,250,0.3);
+  border-radius: 20px; padding: 18px 28px;
+  color: rgba(167,139,250,0.6); font-size: 14px; font-weight: 600;
+  font-family: 'DM Sans',sans-serif; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  width: 100%;
+}
+.btn-add-habit:hover { border-color: var(--guitar); color: var(--guitar); background: rgba(167,139,250,0.05); }
+.btn-add-habit-icon { font-size: 22px; }
+
+/* Delete button on habit card */
+.btn-delete-habit {
+  position: absolute; top: 14px; right: 14px;
+  width: 28px; height: 28px; border-radius: 8px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  color: rgba(255,255,255,0.2); font-size: 13px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  z-index: 10;
+}
+.btn-delete-habit:hover { background: rgba(255,80,80,0.15); color: #FF6B6B; border-color: rgba(255,80,80,0.3); }
+
+/* Mobile add button */
+.mob-btn-add-habit {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--panel); border: 2px dashed rgba(167,139,250,0.3);
+  border-radius: 16px; padding: 14px 20px;
+  color: rgba(167,139,250,0.6); font-size: 13px; font-weight: 600;
+  font-family: 'DM Sans',sans-serif; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+.mob-btn-add-habit:hover, .mob-btn-add-habit:active { border-color: var(--guitar); color: var(--guitar); }
+
+/* Mobile delete */
+.mob-delete-btn {
+  position: absolute; top: 10px; right: 10px;
+  width: 26px; height: 26px; border-radius: 7px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  color: rgba(255,255,255,0.2); font-size: 12px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  z-index: 10;
+}
+.mob-delete-btn:hover, .mob-delete-btn:active { background: rgba(255,80,80,0.15); color: #FF6B6B; }
+
+/* Dynamic habit card colors */
+.habit-card.custom::before { background: var(--custom-color, #A78BFA); }
+.mob-card.custom::before   { background: var(--custom-color, #A78BFA); }
+
 
 /* ═══════════════════════════════════════════
    ████  MOBILE LAYOUT  (<768px)
@@ -511,6 +632,10 @@ body {
     </div>
     <!-- Cards -->
     <div id="pcCards" style="display:flex;flex-direction:column;gap:20px;"></div>
+    <!-- Add habit button -->
+    <button class="btn-add-habit" onclick="openHabitModal()">
+      <span class="btn-add-habit-icon">＋</span> Yeni Alışkanlık Ekle
+    </button>
   </main>
 </div>
 
@@ -569,6 +694,8 @@ body {
       </div>
       <!-- Habit cards -->
       <div id="mobCards"></div>
+      <!-- Mobile add habit button -->
+      <button class="mob-btn-add-habit" onclick="openHabitModal()">＋ Yeni Alışkanlık Ekle</button>
     </div>
 
     <!-- Tab: İstatistik -->
@@ -604,6 +731,33 @@ body {
     </div>
   </nav>
 
+</div>
+
+<!-- ████████ ADD HABIT MODAL ████████ -->
+<div class="modal-overlay" id="habitModal">
+  <div class="modal-box">
+    <div class="modal-title"><span id="modalTitleIcon">✨</span> <span id="modalTitleText">Yeni Alışkanlık Ekle</span></div>
+    <div class="modal-field">
+      <div class="modal-label">İsim</div>
+      <input class="modal-input" id="modalName" type="text" placeholder="Alışkanlık adı..." maxlength="32"/>
+    </div>
+    <div class="modal-field">
+      <div class="modal-label">Açıklama</div>
+      <input class="modal-input" id="modalDesc" type="text" placeholder="Kısa açıklama..." maxlength="48"/>
+    </div>
+    <div class="modal-field">
+      <div class="modal-label">Emoji</div>
+      <div class="emoji-grid" id="emojiGrid"></div>
+    </div>
+    <div class="modal-field">
+      <div class="modal-label">Renk</div>
+      <div class="color-grid" id="colorGrid"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeHabitModal()">İptal</button>
+      <button class="btn-modal-save" onclick="saveHabit()">💾 Kaydet</button>
+    </div>
+  </div>
 </div>
 
 <!-- ████████ FIREBASE + LOGIC ████████ -->
@@ -667,25 +821,53 @@ function showSync(state) {
 async function initFirebase() {
   try {
     const snap = await getDoc(DOC_REF);
-    if (snap.exists()) applyData(snap.data());
+    if (snap.exists()) {
+      applyData(snap.data());
+      // Rebuild cards for any loaded custom habits
+      HABITS.filter(h=>h.cls==='custom').forEach((h,i)=>{ addPcCard(h,i); addMobCard(h,i); });
+      HABITS.forEach(h=>refreshCard(h));
+    }
     hideLoading();
+    buildChart('pc', false); buildChart('mob', false);
     onSnapshot(DOC_REF, snap => {
       if (snap.exists() && !snap.metadata.hasPendingWrites) {
-        applyData(snap.data()); refreshAll();
+        const prevCustomIds = new Set(HABITS.filter(h=>h.cls==='custom').map(h=>h.id));
+        applyData(snap.data());
+        // Add any new custom habits from remote
+        HABITS.filter(h=>h.cls==='custom' && !prevCustomIds.has(h.id)).forEach((h,i)=>{ addPcCard(h,i); addMobCard(h,i); });
+        refreshAll();
       }
     });
   } catch(e) { console.error(e); hideLoading(); }
 }
 
 function applyData(data) {
-  HABITS.forEach(h => { if (data[h.id]) h.week = data[h.id]; });
+  // Update existing habits
+  HABITS.forEach(h => { if (data[h.id] && data[h.id].week) h.week = data[h.id].week; else if (Array.isArray(data[h.id])) h.week = data[h.id]; });
+  // Load custom habits that aren't in HABITS yet
+  if (data._custom) {
+    data._custom.forEach(ch => {
+      if (!HABITS.find(h=>h.id===ch.id)) {
+        HABITS.push({ id:ch.id, cls:'custom', name:ch.name, emoji:ch.emoji, desc:ch.desc, color:ch.color, week:ch.week||[0,0,0,0,0,0,0] });
+      }
+    });
+  }
 }
 
 function saveToFirebase() {
   showSync('saving'); clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async () => {
     try {
-      const p = {}; HABITS.forEach(h => p[h.id] = h.week);
+      const p = {};
+      const custom = [];
+      HABITS.forEach(h => {
+        if (h.cls === 'custom') {
+          custom.push({ id:h.id, name:h.name, emoji:h.emoji, desc:h.desc, color:h.color, week:h.week });
+        } else {
+          p[h.id] = { week: h.week };
+        }
+      });
+      p._custom = custom;
       await setDoc(DOC_REF, p); showSync('saved');
     } catch(e) { showSync('error'); }
   }, 600);
@@ -727,68 +909,96 @@ function initStatic() {
 function buildPcCards() {
   const container = document.getElementById('pcCards');
   if (!container) return;
-  HABITS.forEach((h,idx) => {
-    const card = document.createElement('div');
-    card.className = `habit-card ${h.cls} anim-up`;
-    card.style.animationDelay = (0.1+idx*0.08)+'s';
-    card.id = 'pc-card-'+h.id;
-    card.innerHTML = `
-      <div class="card-info">
-        <div class="card-emoji-wrap">${h.emoji}</div>
-        <div>
-          <div class="card-name">${h.name}</div>
-          <div class="card-desc">${h.desc}</div>
-          <div class="card-badge" id="pc-badge-${h.id}">⚡ Başla!</div>
-        </div>
-      </div>
-      <div class="week-row" id="pc-week-${h.id}"></div>
-      <div class="card-action">
-        <div class="btn-wrap" style="width:110px;height:40px">
-          <button class="btn-done idle" id="pc-btn-${h.id}">Yaptım!</button>
-        </div>
-        <div class="card-weekly-pct" id="pc-wpct-${h.id}">Haftalık: 0%</div>
-      </div>`;
-    container.appendChild(card);
-    card.querySelector('#pc-btn-'+h.id).addEventListener('click', function(e) {
-      h.week[TODAY_I] = h.week[TODAY_I] ? 0 : 1;
-      if (h.week[TODAY_I]) { rippleEffect(this,'pc',h.color); checkBurst(e,h.color); }
-      refreshCard(h); refreshGlobal(); buildChart('pc', true); saveToFirebase();
-    });
-  });
+  HABITS.forEach((h,idx) => addPcCard(h, idx));
   HABITS.forEach(h => refreshCard(h));
+}
+
+function addPcCard(h, idx) {
+  const container = document.getElementById('pcCards');
+  if (!container) return;
+  const card = document.createElement('div');
+  // For custom habits, use a CSS variable for the left border color
+  const isCustom = h.cls === 'custom';
+  card.className = `habit-card ${h.cls} anim-up`;
+  if (isCustom) card.style.setProperty('--custom-color', h.color);
+  card.style.animationDelay = (0.1+idx*0.08)+'s';
+  card.id = 'pc-card-'+h.id;
+  // For custom habits, inject inline style for dynamic colors
+  const dotDoneStyle = isCustom ? `style="background:linear-gradient(135deg,${h.color},${h.color}cc)"` : '';
+  card.innerHTML = `
+    <button class="btn-delete-habit" title="Sil" onclick="deleteHabit('${h.id}')">✕</button>
+    <div class="card-info">
+      <div class="card-emoji-wrap" style="${isCustom?`background:${h.color}18`:''}">${h.emoji}</div>
+      <div>
+        <div class="card-name">${h.name}</div>
+        <div class="card-desc">${h.desc}</div>
+        <div class="card-badge" id="pc-badge-${h.id}" style="${isCustom?`background:${h.color}22;color:${h.color}`:''}">⚡ Başla!</div>
+      </div>
+    </div>
+    <div class="week-row" id="pc-week-${h.id}"></div>
+    <div class="card-action">
+      <div class="btn-wrap" style="width:110px;height:40px">
+        <button class="btn-done idle" id="pc-btn-${h.id}" style="${isCustom?`background:linear-gradient(135deg,${h.color},${h.color}cc)`:''}">Yaptım!</button>
+      </div>
+      <div class="card-weekly-pct" id="pc-wpct-${h.id}">Haftalık: 0%</div>
+    </div>`;
+  // Add inline style for ::before pseudo-element via a style tag
+  if (isCustom) {
+    const st = document.createElement('style');
+    st.textContent = `#pc-card-${h.id}::before { background: linear-gradient(to bottom, ${h.color}, ${h.color}99) !important; }`;
+    document.head.appendChild(st);
+  }
+  container.appendChild(card);
+  card.querySelector('#pc-btn-'+h.id).addEventListener('click', function(e) {
+    h.week[TODAY_I] = h.week[TODAY_I] ? 0 : 1;
+    if (h.week[TODAY_I]) { rippleEffect(this,'pc',h.color); checkBurst(e,h.color); }
+    refreshCard(h); refreshGlobal(); buildChart('pc', true); saveToFirebase();
+  });
 }
 
 /* ── BUILD MOBILE CARDS (once) ── */
 function buildMobCards() {
   const container = document.getElementById('mobCards');
   if (!container) return;
-  HABITS.forEach((h,idx) => {
-    const card = document.createElement('div');
-    card.className = `mob-card ${h.cls}`;
-    card.style.cssText = `animation:fromUp 0.4s ${0.05+idx*0.07}s ease both;`;
-    card.id = 'mob-card-'+h.id;
-    card.innerHTML = `
-      <div class="mob-card-top">
-        <div class="mob-card-left">
-          <div class="mob-emoji-wrap">${h.emoji}</div>
-          <div>
-            <div class="mob-card-name">${h.name}</div>
-            <div class="mob-card-badge" id="mob-badge-${h.id}">⚡ Başla!</div>
-          </div>
-        </div>
-        <div class="mob-btn-wrap">
-          <button class="mob-btn idle" id="mob-btn-${h.id}">Yaptım!</button>
+  HABITS.forEach((h,idx) => addMobCard(h, idx));
+  HABITS.forEach(h => refreshCard(h));
+}
+
+function addMobCard(h, idx) {
+  const container = document.getElementById('mobCards');
+  if (!container) return;
+  const isCustom = h.cls === 'custom';
+  const card = document.createElement('div');
+  card.className = `mob-card ${h.cls}`;
+  card.style.cssText = `animation:fromUp 0.4s ${0.05+idx*0.07}s ease both;${isCustom?'':''} position:relative;`;
+  card.id = 'mob-card-'+h.id;
+  if (isCustom) {
+    const st = document.createElement('style');
+    st.textContent = `#mob-card-${h.id}::before { background: linear-gradient(to bottom, ${h.color}, ${h.color}99) !important; }
+    #mob-card-${h.id} .mob-week-dot.done { background: linear-gradient(135deg,${h.color},${h.color}cc) !important; }`;
+    document.head.appendChild(st);
+  }
+  card.innerHTML = `
+    <button class="mob-delete-btn" title="Sil" onclick="deleteHabit('${h.id}')">✕</button>
+    <div class="mob-card-top">
+      <div class="mob-card-left">
+        <div class="mob-emoji-wrap" style="${isCustom?`background:${h.color}18`:''}">${h.emoji}</div>
+        <div>
+          <div class="mob-card-name">${h.name}</div>
+          <div class="mob-card-badge" id="mob-badge-${h.id}" style="${isCustom?`color:${h.color}`:''}">⚡ Başla!</div>
         </div>
       </div>
-      <div class="mob-week-row" id="mob-week-${h.id}"></div>`;
-    container.appendChild(card);
-    card.querySelector('#mob-btn-'+h.id).addEventListener('click', function(e) {
-      h.week[TODAY_I] = h.week[TODAY_I] ? 0 : 1;
-      if (h.week[TODAY_I]) { rippleEffect(this,'mob',h.color); checkBurst(e,h.color); }
-      refreshCard(h); refreshGlobal(); buildChart('mob', true); saveToFirebase();
-    });
+      <div class="mob-btn-wrap">
+        <button class="mob-btn idle" id="mob-btn-${h.id}" style="${isCustom?`background:linear-gradient(135deg,${h.color},${h.color}cc)`:''}">Yaptım!</button>
+      </div>
+    </div>
+    <div class="mob-week-row" id="mob-week-${h.id}"></div>`;
+  container.appendChild(card);
+  card.querySelector('#mob-btn-'+h.id).addEventListener('click', function(e) {
+    h.week[TODAY_I] = h.week[TODAY_I] ? 0 : 1;
+    if (h.week[TODAY_I]) { rippleEffect(this,'mob',h.color); checkBurst(e,h.color); }
+    refreshCard(h); refreshGlobal(); buildChart('mob', true); saveToFirebase();
   });
-  HABITS.forEach(h => refreshCard(h));
 }
 
 /* ── REFRESH CARD (patches PC + mobile) ── */
@@ -798,6 +1008,7 @@ function refreshCard(h) {
   const weekPct  = Math.round((weekDone/7)*100);
   let cs=0; for(let i=TODAY_I;i>=0;i--){if(h.week[i])cs++;else break;}
   const badgeTxt = cs>0?'🔥 '+cs+' günlük seri':'⚡ Başla!';
+  const isCustom = h.cls === 'custom';
 
   // PC
   const pcBadge = document.getElementById('pc-badge-'+h.id);
@@ -805,7 +1016,12 @@ function refreshCard(h) {
   const pcWpct = document.getElementById('pc-wpct-'+h.id);
   if (pcWpct) pcWpct.textContent = 'Haftalık: '+weekPct+'%';
   const pcBtn = document.getElementById('pc-btn-'+h.id);
-  if (pcBtn) { pcBtn.textContent = done?'✓ Tamam!':'Yaptım!'; pcBtn.className='btn-done '+(done?'active':'idle'); }
+  if (pcBtn) {
+    pcBtn.textContent = done?'✓ Tamam!':'Yaptım!';
+    pcBtn.className='btn-done '+(done?'active':'idle');
+    if (isCustom && !done) pcBtn.style.background = `linear-gradient(135deg,${h.color},${h.color}cc)`;
+    else if (isCustom && done) pcBtn.style.background = '';
+  }
   const pcWeek = document.getElementById('pc-week-'+h.id);
   if (pcWeek) pcWeek.innerHTML = weekDotsHTML(h,'pc');
 
@@ -813,7 +1029,12 @@ function refreshCard(h) {
   const mobBadge = document.getElementById('mob-badge-'+h.id);
   if (mobBadge) mobBadge.textContent = badgeTxt;
   const mobBtn = document.getElementById('mob-btn-'+h.id);
-  if (mobBtn) { mobBtn.textContent = done?'✓ Tamam!':'Yaptım!'; mobBtn.className='mob-btn '+(done?'active':'idle'); }
+  if (mobBtn) {
+    mobBtn.textContent = done?'✓ Tamam!':'Yaptım!';
+    mobBtn.className='mob-btn '+(done?'active':'idle');
+    if (isCustom && !done) mobBtn.style.background = `linear-gradient(135deg,${h.color},${h.color}cc)`;
+    else if (isCustom && done) mobBtn.style.background = '';
+  }
   const mobWeek = document.getElementById('mob-week-'+h.id);
   if (mobWeek) mobWeek.innerHTML = mobWeekDotsHTML(h);
 }
@@ -909,6 +1130,7 @@ function refreshGlobal() {
 
 /* ── CHART STATE (for animation) ── */
 const chartState = { pc: null, mob: null };
+const chartRAF   = { pc: null, mob: null }; // track active animation frame
 
 /* ── CHART ── */
 function buildChart(target, animate) {
@@ -922,18 +1144,17 @@ function buildChart(target, animate) {
   const H = target==='mob' ? 120 : 160;
   const padL=28, padR=12, padT=18, padB=6;
   const innerW=W-padL-padR, innerH=H-padT-padB;
-  const step=innerW/6, maxVal=HABITS.length;
+  const step=innerW/Math.max(6,HABITS.length>0?6:6), maxVal=Math.max(1,HABITS.length);
 
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
 
-  function xOf(i){ return padL+i*step; }
+  function xOf(i){ return padL+i*(innerW/6); }
   function yOf(v){ return padT+innerH-(v/maxVal)*innerH; }
   function dayTotal(i){ return i>TODAY_I?null:HABITS.reduce((s,h)=>s+(h.week[i]?1:0),0); }
 
   const vals  = DAYS.map((_,i)=>dayTotal(i));
   const target_pts = vals.map((v,i)=>v!==null?[xOf(i),yOf(v)]:null);
 
-  // Grid (static, draw once into a group)
   let grid='';
   for(let v=0;v<=maxVal;v++){
     const y=yOf(v);
@@ -941,7 +1162,6 @@ function buildChart(target, animate) {
     if(v>0) grid+=`<text x="${padL-5}" y="${y+4}" text-anchor="end" font-size="10" fill="rgba(255,255,255,0.2)" font-family="DM Sans,sans-serif">${v}</text>`;
   }
 
-  // Future dashed line
   function makeFuture(pts){
     const known = pts.filter(Boolean);
     if(TODAY_I>=6 || known.length===0) return '';
@@ -985,7 +1205,13 @@ function buildChart(target, animate) {
     makeFuture(cur_pts)+dots;
   }
 
-  // If no previous state or not animating, just render target
+  // Cancel any in-progress animation for this target
+  if (chartRAF[target]) {
+    cancelAnimationFrame(chartRAF[target]);
+    chartRAF[target] = null;
+  }
+
+  // Capture the current interpolated "from" state
   const prev = chartState[target];
   if (!animate || !prev) {
     chartState[target] = target_pts.slice();
@@ -993,11 +1219,17 @@ function buildChart(target, animate) {
     return;
   }
 
-  // Animate from prev to target
-  const DURATION = 520; // ms
-  let start = null;
+  // Normalize prev to same length as target_pts
+  const from_pts = target_pts.map((tp, i) => {
+    if (!tp) return null;
+    const pp = (prev[i] && prev[i] !== null) ? prev[i] : null;
+    if (!pp) return [tp[0], yOf(0)]; // new points rise from baseline
+    return [pp[0], pp[1]];
+  });
 
-  function ease(t){ return t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; } // easeInOutCubic
+  const DURATION = 500;
+  let start = null;
+  function ease(t){ return t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
 
   function tick(ts){
     if(!start) start=ts;
@@ -1006,19 +1238,128 @@ function buildChart(target, animate) {
 
     const cur = target_pts.map((tp,i)=>{
       if(!tp) return null;
-      const pp = prev[i];
-      if(!pp) return tp; // new point appears directly
-      return [ pp[0]+(tp[0]-pp[0])*t, pp[1]+(tp[1]-pp[1])*t ];
+      const fp = from_pts[i];
+      if(!fp) return tp;
+      return [ fp[0]+(tp[0]-fp[0])*t, fp[1]+(tp[1]-fp[1])*t ];
     });
 
     renderFrame(cur);
 
-    if(raw<1) requestAnimationFrame(tick);
-    else chartState[target] = target_pts.slice();
+    if(raw<1) {
+      chartRAF[target] = requestAnimationFrame(tick);
+    } else {
+      chartRAF[target] = null;
+      chartState[target] = target_pts.slice();
+    }
   }
 
-  requestAnimationFrame(tick);
+  chartRAF[target] = requestAnimationFrame(tick);
 }
+
+/* ── HABIT MODAL ── */
+const EMOJI_LIST = ['🏋️','📚','🎸','🧘','🏃','🚴','✍️','🎨','🎯','💪','🥗','💧','🧠','🎵','📖','🌅','🧹','💻','🗣️','🛌','🥊','🏊','⚽','🎹','🌿','📝','🔬','🤸'];
+const COLOR_LIST = ['#FF6B6B','#3ECFB2','#A78BFA','#FDCB6E','#74B9FF','#FF8E53','#6C5CE7','#00B894','#E84393','#0984E3','#55EFC4','#FD79A8'];
+let modalSelectedEmoji = EMOJI_LIST[0];
+let modalSelectedColor = COLOR_LIST[0];
+
+function openHabitModal() {
+  // Build emoji grid
+  const eg = document.getElementById('emojiGrid');
+  eg.innerHTML = EMOJI_LIST.map(e=>`<button class="emoji-btn${e===modalSelectedEmoji?' selected':''}" onclick="selectEmoji('${e}',this)">${e}</button>`).join('');
+  // Build color grid
+  const cg = document.getElementById('colorGrid');
+  cg.innerHTML = COLOR_LIST.map(c=>`<div class="color-swatch${c===modalSelectedColor?' selected':''}" style="background:${c}" onclick="selectColor('${c}',this)"></div>`).join('');
+  document.getElementById('modalName').value = '';
+  document.getElementById('modalDesc').value = '';
+  document.getElementById('modalTitleText').textContent = 'Yeni Alışkanlık Ekle';
+  document.getElementById('habitModal').classList.add('open');
+  setTimeout(()=>document.getElementById('modalName').focus(), 200);
+}
+
+window.openHabitModal = openHabitModal;
+
+window.closeHabitModal = function() {
+  document.getElementById('habitModal').classList.remove('open');
+};
+
+window.selectEmoji = function(e, btn) {
+  modalSelectedEmoji = e;
+  document.querySelectorAll('.emoji-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+};
+
+window.selectColor = function(c, el) {
+  modalSelectedColor = c;
+  document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+};
+
+window.saveHabit = function() {
+  const name = document.getElementById('modalName').value.trim();
+  const desc = document.getElementById('modalDesc').value.trim();
+  if (!name) { document.getElementById('modalName').focus(); document.getElementById('modalName').style.borderColor='#FF6B6B'; return; }
+  document.getElementById('modalName').style.borderColor='';
+
+  const id = 'habit_' + Date.now();
+  const newHabit = {
+    id, cls:'custom', name, emoji: modalSelectedEmoji,
+    desc: desc || name, color: modalSelectedColor, week:[0,0,0,0,0,0,0]
+  };
+  HABITS.push(newHabit);
+
+  // Update CSS variable for this habit's color
+  injectHabitCSS(newHabit);
+
+  // Add to both PC and mobile
+  addPcCard(newHabit, HABITS.length-1);
+  addMobCard(newHabit, HABITS.length-1);
+  refreshGlobal();
+  buildChart('pc', true);
+  buildChart('mob', true);
+  saveToFirebase();
+  closeHabitModal();
+};
+
+function injectHabitCSS(h) {
+  if (h.cls !== 'custom') return;
+  // Already handled via inline style attribute on card
+}
+
+function deleteHabit(id) {
+  const idx = HABITS.findIndex(h=>h.id===id);
+  if (idx === -1) return;
+  HABITS.splice(idx, 1);
+
+  // Remove PC card
+  const pcCard = document.getElementById('pc-card-'+id);
+  if (pcCard) {
+    pcCard.style.transition = 'opacity 0.3s, transform 0.3s';
+    pcCard.style.opacity = '0';
+    pcCard.style.transform = 'scale(0.95)';
+    setTimeout(()=>pcCard.remove(), 320);
+  }
+  // Remove mobile card
+  const mobCard = document.getElementById('mob-card-'+id);
+  if (mobCard) {
+    mobCard.style.transition = 'opacity 0.3s, transform 0.3s';
+    mobCard.style.opacity = '0';
+    mobCard.style.transform = 'scale(0.95)';
+    setTimeout(()=>mobCard.remove(), 320);
+  }
+
+  setTimeout(()=>{
+    refreshGlobal();
+    buildChart('pc', true);
+    buildChart('mob', true);
+    saveToFirebase();
+  }, 350);
+}
+window.deleteHabit = deleteHabit;
+
+// Close modal on overlay click
+document.getElementById('habitModal').addEventListener('click', function(e){
+  if (e.target === this) closeHabitModal();
+});
 
 /* ── ANIMATIONS ── */
 function rippleEffect(btn, target, color) {
@@ -1059,7 +1400,6 @@ initStatic();
 buildPcCards();
 buildMobCards();
 refreshGlobal();
-requestAnimationFrame(()=>{ buildChart('pc', false); buildChart('mob', false); });
 
 let resizeTimer;
 window.addEventListener('resize',()=>{ clearTimeout(resizeTimer); resizeTimer=setTimeout(()=>{ buildChart('pc', false); buildChart('mob', false); },120); });
