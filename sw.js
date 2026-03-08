@@ -1,30 +1,29 @@
 const CACHE = 'habitio-v1';
-const ASSETS = [
-  '/gunluk-takip/',
-  '/gunluk-takip/index.html',
-  '/gunluk-takip/manifest.json'
-];
 
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
-  );
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
-  );
+  e.waitUntil(self.clients.claim());
 });
 
+// Network-first: önce GitHub'dan çek, internet yoksa cache'den göster
 self.addEventListener('fetch', e => {
-  // Firebase isteklerini her zaman ağdan al
-  if (e.request.url.includes('firestore') || e.request.url.includes('firebase')) {
-    return;
-  }
+  // Firebase isteklerini hiç dokunma
+  if (e.request.url.includes('firestore') || e.request.url.includes('firebase')) return;
+
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
+    fetch(e.request)
+      .then(response => {
+        // Başarılı yanıtı cache'e de kaydet
+        const clone = response.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+        return response;
+      })
+      .catch(() => {
+        // İnternet yoksa cache'den göster
+        return caches.match(e.request);
+      })
   );
 });
