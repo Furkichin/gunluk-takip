@@ -316,7 +316,7 @@ body {
   /* MOBILE HABIT CARDS */
   .mob-card {
     background: var(--panel); border-radius: 18px;
-    padding: 16px;
+    padding: 14px 12px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.25);
     border: 1px solid var(--border);
     position: relative; overflow: hidden;
@@ -366,20 +366,22 @@ body {
 
   /* Mobile week dots */
   .mob-week-row { display: flex; justify-content: space-between; }
-  .mob-week-cell { display: flex; flex-direction: column; align-items: center; width: calc(100% / 7); }
+  .mob-week-cell { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 0; }
   .mob-week-dot {
-    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
     background: var(--panel2); display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: rgba(255,255,255,0.15); margin-bottom: 4px;
+    font-size: 10px; line-height: 1; color: rgba(255,255,255,0.15); margin-bottom: 4px;
     border: 2px solid transparent;
     transition: background 0.3s, box-shadow 0.3s;
+    box-sizing: border-box; overflow: hidden;
   }
   .mob-week-dot.done  { color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .mob-week-dot.done::after { content: '✓'; font-size: 13px; line-height: 1; }
   .mob-card.sport  .mob-week-dot.done { background: linear-gradient(135deg,var(--sport),#FF8E53); }
   .mob-card.read   .mob-week-dot.done { background: linear-gradient(135deg,var(--read),#2BA8A0); }
   .mob-card.guitar .mob-week-dot.done { background: linear-gradient(135deg,var(--guitar),#6D28D9); }
-  .mob-week-dot.today { border-color: var(--guitar); }
-  .mob-week-label { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .mob-week-dot.today { border-color: transparent; outline: 2px solid var(--guitar); outline-offset: 2px; }
+  .mob-week-label { font-size: 8px; color: var(--muted); font-weight: 500; width: 100%; text-align: center; overflow: hidden; white-space: nowrap; }
   .mob-week-label.today { color: var(--guitar); font-weight: 700; }
 
   /* BOTTOM NAV */
@@ -826,7 +828,7 @@ function weekDotsHTML(h) {
 function mobWeekDotsHTML(h) {
   return `<div class="mob-week-row">${DAYS.map((d,i)=>`
     <div class="mob-week-cell">
-      <div class="mob-week-dot${h.week[i]?' done':''}${i===TODAY_I?' today':''}">${h.week[i]?'✓':''}</div>
+      <div class="mob-week-dot${h.week[i]?' done':''}${i===TODAY_I?' today':''}"></div>
       <div class="mob-week-label${i===TODAY_I?' today':''}">${d}</div>
     </div>`).join('')}</div>`;
 }
