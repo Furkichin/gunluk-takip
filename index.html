@@ -365,8 +365,8 @@ body {
   .mob-btn:active { transform: scale(0.95); }
 
   /* Mobile week dots */
-  .mob-week-row { display: flex; justify-content: space-between; }
-  .mob-week-cell { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 0; }
+  .mob-week-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .mob-week-cell { display: flex; flex-direction: column; align-items: center; }
   .mob-week-dot {
     width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
     background: var(--panel2); display: flex; align-items: center; justify-content: center;
