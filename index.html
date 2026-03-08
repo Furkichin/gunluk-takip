@@ -365,10 +365,10 @@ body {
   .mob-btn:active { transform: scale(0.95); }
 
   /* Mobile week dots */
-  .mob-week-row { display: flex; gap: 5px; }
-  .mob-week-cell { flex: 1; text-align: center; }
+  .mob-week-row { display: flex; justify-content: space-between; gap: 4px; }
+  .mob-week-cell { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; }
   .mob-week-dot {
-    width: 100%; aspect-ratio: 1; border-radius: 8px;
+    width: 34px; height: 34px; border-radius: 50%;
     background: var(--panel2); display: flex; align-items: center; justify-content: center;
     font-size: 11px; color: rgba(255,255,255,0.15); margin-bottom: 4px;
     border: 2px solid transparent;
