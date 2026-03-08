@@ -138,6 +138,155 @@ body {
 .sidebar-divider   { height: 1px; background: var(--border); margin: 22px 0; }
 .sidebar-greet { margin-top: auto; padding-top: 28px; font-size: 12px; color: rgba(255,255,255,0.15); line-height: 1.6; }
 
+/* SIDEBAR NAV */
+.sidebar-nav { display: flex; flex-direction: column; gap: 4px; margin-bottom: 24px; }
+.sidebar-nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: 12px;
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.35);
+  cursor: pointer; transition: background 0.2s, color 0.2s;
+  border: none; background: none; font-family: 'DM Sans', sans-serif;
+  text-align: left; width: 100%;
+}
+.sidebar-nav-item:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7); }
+.sidebar-nav-item.active { background: rgba(167,139,250,0.12); color: var(--guitar); }
+.sidebar-nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+/* PC STATS PANEL */
+.pc-stats-panel { display: none; padding: 32px 40px 40px; flex-direction: column; gap: 20px; background: var(--bg); }
+.pc-stats-panel.active { display: flex; }
+
+/* STATS TABS */
+.stats-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.stats-tab-btn {
+  padding: 8px 18px; border-radius: 20px; border: 1.5px solid var(--border);
+  background: transparent; color: var(--muted); font-size: 12px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
+}
+.stats-tab-btn:hover { border-color: rgba(167,139,250,0.4); color: rgba(167,139,250,0.7); }
+.stats-tab-btn.active { background: rgba(167,139,250,0.15); border-color: var(--guitar); color: var(--guitar); }
+
+.stats-pane { display: none; flex-direction: column; gap: 20px; }
+.stats-pane.active { display: flex; }
+
+/* STAT CARDS */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+.stat-tile {
+  background: var(--panel); border-radius: 18px; padding: 20px 22px;
+  border: 1px solid var(--border); box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+}
+.stat-tile-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 8px; }
+.stat-tile-val { font-size: 32px; font-weight: 800; color: var(--text); line-height: 1; }
+.stat-tile-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
+.stat-tile-accent { border-top: 3px solid; border-radius: 18px; }
+
+/* HEATMAP */
+.heatmap-wrap { overflow-x: hidden; padding-bottom: 6px; }
+.heatmap-day-labels {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 3px; margin-bottom: 4px;
+}
+.heatmap-day-label {
+  font-size: 9px; color: var(--muted); font-weight: 600;
+  text-align: center; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+.heatmap-month-row {
+  grid-column: 1 / -1;
+  font-size: 9px; color: rgba(167,139,250,0.65); font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 5px 0 2px; margin-top: 2px;
+}
+.heatmap-cell {
+  aspect-ratio: 1; border-radius: 3px;
+  background: rgba(255,255,255,0.05);
+  transition: transform 0.12s;
+  min-height: 10px;
+}
+.heatmap-cell:hover { transform: scale(1.35); cursor: default; }
+.heatmap-cell.l1 { background: rgba(167,139,250,0.22); }
+.heatmap-cell.l2 { background: rgba(167,139,250,0.46); }
+.heatmap-cell.l3 { background: rgba(167,139,250,0.70); }
+.heatmap-cell.l4 { background: rgba(167,139,250,0.95); }
+.heatmap-cell.future { background: rgba(255,255,255,0.02); opacity: 0.35; }
+.heatmap-legend {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 12px; font-size: 11px; color: var(--muted);
+}
+.heatmap-legend-cell { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+.heatmap-legend-cell.empty { background: rgba(255,255,255,0.05); }
+.heatmap-legend-cell.l1    { background: rgba(167,139,250,0.22); }
+.heatmap-legend-cell.l2    { background: rgba(167,139,250,0.46); }
+.heatmap-legend-cell.l3    { background: rgba(167,139,250,0.70); }
+.heatmap-legend-cell.l4    { background: rgba(167,139,250,0.95); }
+.heatmap-filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.heatmap-filter-btn {
+  padding: 5px 14px; border-radius: 16px; border: 1.5px solid var(--border);
+  background: transparent; color: var(--muted); font-size: 11px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
+}
+.heatmap-filter-btn.active { border-color: var(--guitar); color: var(--guitar); background: rgba(167,139,250,0.1); }
+
+/* COMPARISON TABLE */
+.compare-table { width: 100%; border-collapse: collapse; }
+.compare-table th { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; padding: 0 16px 12px; text-align: left; }
+.compare-table th:not(:first-child) { text-align: right; }
+.compare-table td { padding: 12px 16px; border-top: 1px solid var(--border); vertical-align: middle; }
+.compare-table td:not(:first-child) { text-align: right; font-weight: 700; color: var(--text); font-size: 14px; }
+.compare-habit-name { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--text); font-size: 14px; }
+.compare-bar-wrap { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+.compare-bar-bg { width: 80px; height: 5px; border-radius: 10px; background: rgba(255,255,255,0.07); overflow: hidden; }
+.compare-bar-fill { height: 100%; border-radius: 10px; transition: width 0.6s cubic-bezier(.4,2,.6,1); }
+.rank-badge { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0; }
+.rank-1 { background: rgba(253,203,110,0.2); color: #FDCB6E; }
+.rank-2 { background: rgba(178,190,195,0.2); color: #B2BEC3; }
+.rank-3 { background: rgba(255,107,107,0.15); color: #FF8E53; }
+
+/* PATTERN BARS */
+.pattern-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.pattern-day-label { font-size: 12px; font-weight: 600; color: var(--muted); width: 32px; flex-shrink: 0; }
+.pattern-bar-bg { flex: 1; height: 8px; border-radius: 10px; background: rgba(255,255,255,0.06); overflow: hidden; }
+.pattern-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--guitar), #6D28D9); transition: width 0.7s cubic-bezier(.4,2,.6,1); }
+.pattern-pct { font-size: 12px; font-weight: 700; color: var(--text); width: 38px; text-align: right; flex-shrink: 0; }
+.pattern-best { background: rgba(167,139,250,0.12); border-radius: 10px; padding: 2px 8px; font-size: 10px; font-weight: 700; color: var(--guitar); margin-left: 4px; }
+
+/* STREAK HISTORY */
+.streak-history-list { display: flex; flex-direction: column; gap: 10px; }
+.streak-history-item {
+  background: var(--panel2); border-radius: 14px; padding: 14px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid var(--border);
+}
+.streak-history-left { display: flex; align-items: center; gap: 12px; }
+.streak-history-emoji { font-size: 22px; }
+.streak-history-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.streak-history-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.streak-history-val { font-size: 22px; font-weight: 800; }
+.streak-current-badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: rgba(74,222,128,0.15); color: #4ade80; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+
+/* PERIOD COMPARE */
+.period-toggle { display: flex; gap: 8px; margin-bottom: 18px; }
+.period-btn {
+  padding: 7px 18px; border-radius: 20px; border: 1.5px solid var(--border);
+  background: transparent; color: var(--muted); font-size: 12px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
+}
+.period-btn.active { background: rgba(167,139,250,0.15); border-color: var(--guitar); color: var(--guitar); }
+.period-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.period-card { background: var(--panel2); border-radius: 16px; padding: 18px 20px; border: 1px solid var(--border); }
+.period-card-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; font-weight: 600; }
+.period-habit-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.period-habit-name { font-size: 12px; color: var(--text); font-weight: 500; }
+.period-habit-pct { font-size: 13px; font-weight: 800; }
+.period-delta { font-size: 11px; padding: 1px 7px; border-radius: 8px; font-weight: 700; }
+.period-delta.up { background: rgba(74,222,128,0.15); color: #4ade80; }
+.period-delta.down { background: rgba(255,107,107,0.15); color: var(--sport); }
+.period-delta.same { background: rgba(255,255,255,0.07); color: var(--muted); }
+
 /* TOPBAR */
 .topbar {
   background: var(--panel); padding: 22px 40px;
@@ -153,8 +302,6 @@ body {
 
 /* MAIN */
 .pc-main { padding: 32px 40px 40px; display: flex; flex-direction: column; gap: 20px; background: var(--bg); }
-
-/* CHART */
 .chart-card { background: var(--panel); border-radius: 20px; padding: 24px 28px 18px; box-shadow: 0 2px 20px rgba(0,0,0,0.3); border: 1px solid var(--border); }
 .chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
 .chart-title  { font-size: 15px; font-weight: 700; color: var(--text); }
@@ -321,15 +468,14 @@ body {
 
 /* Delete button on habit card */
 .btn-delete-habit {
-  position: absolute; top: 14px; right: 14px;
-  width: 28px; height: 28px; border-radius: 8px;
-  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-  color: rgba(255,255,255,0.2); font-size: 13px;
+  width: 32px; height: 32px; border-radius: 9px;
+  background: rgba(255,80,80,0.08); border: 1px solid rgba(255,80,80,0.2);
+  color: rgba(255,80,80,0.5); font-size: 13px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s, color 0.2s;
-  z-index: 10;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
 }
-.btn-delete-habit:hover { background: rgba(255,80,80,0.15); color: #FF6B6B; border-color: rgba(255,80,80,0.3); }
+.btn-delete-habit:hover { background: rgba(255,80,80,0.2); color: #FF6B6B; border-color: rgba(255,80,80,0.45); }
 
 /* Mobile add button */
 .mob-btn-add-habit {
@@ -546,9 +692,402 @@ body {
 
   .mob-section-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
 }
+
+/* ═══════════════════════════════════════════
+   AUTH SCREEN
+═══════════════════════════════════════════ */
+#authScreen {
+  position: fixed; inset: 0; z-index: 8000;
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(167,139,250,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(62,207,178,0.06) 0%, transparent 55%);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.5s ease;
+}
+#authScreen.hidden { opacity: 0; pointer-events: none; }
+.auth-box {
+  width: 400px; max-width: 92vw;
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 28px; padding: 40px 36px 36px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+  position: relative;
+}
+.auth-logo { font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing: -0.5px; }
+.auth-logo span { color: var(--guitar); }
+.auth-tagline { font-size: 12px; color: rgba(255,255,255,0.25); margin-bottom: 32px; }
+.auth-tabs { display: flex; margin-bottom: 28px; background: var(--panel2); border-radius: 12px; padding: 4px; }
+.auth-tab {
+  flex: 1; padding: 9px; border-radius: 9px; border: none;
+  font-size: 13px; font-weight: 700; font-family: "DM Sans",sans-serif;
+  cursor: pointer; transition: background 0.2s, color 0.2s; background: transparent; color: var(--muted);
+}
+.auth-tab.active { background: var(--panel); color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.auth-form { display: flex; flex-direction: column; gap: 14px; }
+.auth-field { display: flex; flex-direction: column; }
+.auth-field-label { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.auth-input {
+  width: 100%; background: var(--panel2); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 12px 15px;
+  color: var(--text); font-size: 14px; font-family: "DM Sans",sans-serif;
+  outline: none; transition: border-color 0.2s;
+}
+.auth-input:focus { border-color: var(--guitar); }
+.auth-btn {
+  width: 100%; padding: 14px; border-radius: 14px; border: none;
+  background: linear-gradient(135deg, var(--guitar), #6D28D9);
+  color: white; font-size: 15px; font-weight: 800;
+  font-family: "DM Sans",sans-serif; cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s; margin-top: 4px;
+}
+.auth-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+.auth-btn:disabled { opacity: 0.5; cursor: wait; transform: none; }
+.auth-error {
+  font-size: 12px; color: var(--sport); background: rgba(255,107,107,0.1);
+  border: 1px solid rgba(255,107,107,0.2); border-radius: 10px;
+  padding: 10px 14px; display: none; margin-top: 2px;
+}
+.auth-error.show { display: block; }
+
+/* ═══════════════════════════════════════════
+   SIDEBAR USER AREA
+═══════════════════════════════════════════ */
+.sidebar-user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 13px; border-radius: 14px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.sidebar-user-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--guitar), #6D28D9); color: white;
+}
+.sidebar-user-info { flex: 1; overflow: hidden; }
+.sidebar-user-name { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-user-email { font-size: 10px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-logout-btn {
+  padding: 5px 9px; border-radius: 8px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--muted); font-size: 10px; font-weight: 600;
+  font-family: "DM Sans",sans-serif; cursor: pointer;
+  transition: background 0.2s, color 0.2s; white-space: nowrap; flex-shrink: 0;
+}
+.sidebar-logout-btn:hover { background: rgba(255,80,80,0.12); color: var(--sport); border-color: rgba(255,80,80,0.25); }
+
+/* ═══════════════════════════════════════════
+   EDIT MODE
+═══════════════════════════════════════════ */
+.btn-delete-habit,
+.mob-delete-btn,
+.btn-add-habit,
+.mob-btn-add-habit,
+.btn-edit-color { display: none !important; }
+
+body.edit-mode .btn-delete-habit  { display: flex !important; }
+body.edit-mode .mob-delete-btn    { display: flex !important; }
+body.edit-mode .btn-add-habit     { display: flex !important; }
+body.edit-mode .mob-btn-add-habit { display: flex !important; }
+body.edit-mode .btn-edit-color    { display: flex !important; }
+
+body.edit-mode .habit-card { border-color: rgba(167,139,250,0.28); }
+body.edit-mode .mob-card   { border-color: rgba(167,139,250,0.28); }
+
+.edit-mode-banner {
+  display: none; align-items: center; gap: 10px;
+  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25);
+  border-radius: 12px; padding: 8px 16px;
+  font-size: 12px; font-weight: 600; color: var(--guitar);
+}
+body.edit-mode .edit-mode-banner { display: flex; }
+
+.btn-edit-toggle {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 10px 14px; border-radius: 12px;
+  border: 1.5px solid var(--border); background: transparent;
+  color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 600;
+  font-family: "DM Sans",sans-serif; cursor: pointer;
+  transition: all 0.2s; margin-top: 4px;
+}
+.btn-edit-toggle:hover { border-color: rgba(167,139,250,0.5); color: var(--guitar); background: rgba(167,139,250,0.06); }
+body.edit-mode .btn-edit-toggle { background: rgba(167,139,250,0.12); border-color: var(--guitar); color: var(--guitar); }
+
+.mob-edit-toggle-btn {
+  padding: 6px 13px; border-radius: 18px;
+  border: 1.5px solid var(--border); background: var(--panel);
+  color: rgba(255,255,255,0.35); font-size: 11px; font-weight: 700;
+  font-family: "DM Sans",sans-serif; cursor: pointer;
+  transition: all 0.2s; -webkit-tap-highlight-color: transparent;
+}
+body.edit-mode .mob-edit-toggle-btn { background: rgba(167,139,250,0.15); border-color: var(--guitar); color: var(--guitar); }
+
+.btn-edit-color {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2);
+  color: rgba(167,139,250,0.5); font-size: 14px;
+  cursor: pointer; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.btn-edit-color:hover { background: rgba(167,139,250,0.2); color: var(--guitar); border-color: rgba(167,139,250,0.45); }
+
+
+/* PC edit controls — sit inside card-action, above the Yaptım button */
+.card-edit-controls {
+  display: none;
+  gap: 6px; align-items: center; justify-content: center;
+  margin-bottom: 2px;
+}
+body.edit-mode .card-edit-controls { display: flex; }
+
+/* Mobile edit controls — sit below the week dots */
+.mob-edit-controls {
+  display: none;
+  gap: 8px; align-items: center; justify-content: flex-end;
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+body.edit-mode .mob-edit-controls { display: flex; }
+
+.mob-edit-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 9px; border: 1px solid;
+  font-size: 11px; font-weight: 700; font-family: "DM Sans",sans-serif;
+  cursor: pointer; transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mob-edit-btn.delete {
+  background: rgba(255,80,80,0.08); border-color: rgba(255,80,80,0.2); color: rgba(255,80,80,0.6);
+}
+.mob-edit-btn.delete:hover, .mob-edit-btn.delete:active {
+  background: rgba(255,80,80,0.2); border-color: rgba(255,80,80,0.4); color: #FF6B6B;
+}
+.mob-edit-btn.color {
+  background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.2); color: rgba(167,139,250,0.6);
+}
+.mob-edit-btn.color:hover, .mob-edit-btn.color:active {
+  background: rgba(167,139,250,0.2); border-color: rgba(167,139,250,0.4); color: var(--guitar);
+}
+
+.mob-edit-banner {
+  display: none; align-items: center; justify-content: center; gap: 8px;
+  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2);
+  border-radius: 12px; padding: 10px 14px;
+  font-size: 12px; font-weight: 600; color: var(--guitar);
+}
+body.edit-mode .mob-edit-banner { display: flex; }
+
+.delete-confirm {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--panel2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 14px 20px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 9000;
+  opacity: 0; transition: opacity 0.25s, transform 0.25s; pointer-events: none;
+  white-space: nowrap;
+}
+.delete-confirm.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all; }
+.delete-confirm-text { font-size: 13px; font-weight: 600; color: var(--text); }
+.delete-confirm-yes {
+  padding: 7px 16px; border-radius: 10px; border: none;
+  background: rgba(255,80,80,0.2); color: var(--sport); font-size: 12px; font-weight: 700;
+  font-family: "DM Sans",sans-serif; cursor: pointer;
+}
+.delete-confirm-yes:hover { background: rgba(255,80,80,0.35); }
+.delete-confirm-no {
+  padding: 7px 16px; border-radius: 10px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); font-size: 12px; font-weight: 700;
+  font-family: "DM Sans",sans-serif; cursor: pointer;
+}
+
+
+/* ═══════════════════════════════════════════
+   ADMİN MODU
+═══════════════════════════════════════════ */
+#demoBadge {
+  position: fixed; top: 16px; right: 16px; z-index: 9500;
+  display: none; align-items: center; gap: 8px;
+  background: rgba(255,80,80,0.12);
+  border: 1.5px solid rgba(255,80,80,0.4);
+  border-radius: 20px; padding: 7px 14px;
+  font-size: 11px; font-weight: 700; color: #FF6B6B;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#demoBadge:hover { background: rgba(255,80,80,0.22); }
+body.demo-mode #demoBadge { display: flex; }
+
+#demoBadge .demo-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #FF6B6B;
+  animation: demoPulse 1.4s ease-in-out infinite;
+}
+@keyframes demoPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+
+.demo-exit-hint {
+  font-size: 10px; color: rgba(255,107,107,0.6); margin-left: 2px;
+}
+
+/* Demo mode: disable save/firebase indicators */
+body.demo-mode #syncBadge { display: none !important; }
+
+/* ═══════════════════════════════════════════
+   ADMİN PANELİ (Sidebar içinde)
+═══════════════════════════════════════════ */
+#adminPanel {
+  display: none; margin-top: 16px;
+  background: rgba(255,80,80,0.06); border: 1px solid rgba(255,80,80,0.18);
+  border-radius: 14px; padding: 14px 16px;
+}
+body.demo-mode #adminPanel { display: block; }
+.admin-panel-title {
+  font-size: 10px; color: rgba(255,107,107,0.7); font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-reset-all {
+  width: 100%; padding: 10px 14px; border-radius: 11px; border: none;
+  background: rgba(255,80,80,0.15); color: #FF6B6B;
+  font-size: 12px; font-weight: 700; font-family: "DM Sans",sans-serif;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: background 0.2s;
+}
+.btn-reset-all:hover { background: rgba(255,80,80,0.28); }
+
+/* Mobil admin panel */
+#adminPanelMob {
+  display: none;
+  background: rgba(255,80,80,0.06); border: 1px solid rgba(255,80,80,0.18);
+  border-radius: 14px; padding: 12px 14px; margin-top: 10px;
+}
+body.demo-mode #adminPanelMob { display: block; }
+
+/* ═══════════════════════════════════════════
+   RESET ONAY MODALİ (Çift doğrulama)
+═══════════════════════════════════════════ */
+#resetConfirmModal {
+  position: fixed; inset: 0; z-index: 9900;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+#resetConfirmModal.open { opacity: 1; pointer-events: all; }
+.reset-modal-box {
+  width: 380px; max-width: 92vw;
+  background: var(--panel); border: 1px solid rgba(255,80,80,0.35);
+  border-radius: 24px; padding: 36px 32px 30px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+  animation: adminModalIn 0.25s cubic-bezier(.4,2,.6,1) both;
+  text-align: center;
+}
+.reset-modal-icon { font-size: 40px; margin-bottom: 14px; }
+.reset-modal-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.reset-modal-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+.reset-modal-step {
+  display: none; flex-direction: column; gap: 14px;
+}
+.reset-modal-step.active { display: flex; }
+.reset-step-label { font-size: 12px; color: rgba(255,107,107,0.8); font-weight: 600; margin-bottom: 4px; }
+.reset-confirm-input {
+  width: 100%; background: var(--panel2); border: 1.5px solid rgba(255,80,80,0.3);
+  border-radius: 12px; padding: 11px 14px; text-align: center;
+  color: var(--text); font-size: 15px; font-family: "DM Sans",sans-serif;
+  outline: none; transition: border-color 0.2s;
+}
+.reset-confirm-input:focus { border-color: rgba(255,80,80,0.7); }
+.reset-modal-btns { display: flex; gap: 10px; }
+.reset-btn-cancel {
+  flex: 1; padding: 11px; border-radius: 12px;
+  border: 1.5px solid var(--border); background: transparent;
+  color: var(--muted); font-size: 13px; font-weight: 700;
+  font-family: "DM Sans",sans-serif; cursor: pointer; transition: all 0.2s;
+}
+.reset-btn-cancel:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+.reset-btn-next {
+  flex: 2; padding: 11px; border-radius: 12px; border: none;
+  background: linear-gradient(135deg, #FF4757, #FF6B6B);
+  color: white; font-size: 13px; font-weight: 800;
+  font-family: "DM Sans",sans-serif; cursor: pointer; transition: opacity 0.2s;
+  opacity: 0.4;
+}
+.reset-btn-next.ready { opacity: 1; }
+.reset-btn-next:not(.ready) { cursor: not-allowed; }
+
 </style>
 </head>
 <body>
+
+<!-- ████████ AUTH SCREEN ████████ -->
+<div id="authScreen">
+  <div class="auth-box">
+    <div class="auth-logo" id="authLogo" style="cursor:default;user-select:none">Habit<span>.</span>io</div>
+    <div class="auth-tagline">Alışkanlıklarını takip et, hayatını dönüştür.</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')">Giriş Yap</button>
+      <button class="auth-tab" id="authTabRegister" onclick="switchAuthTab('register')">Kayıt Ol</button>
+    </div>
+    <div class="auth-form">
+      <div class="auth-field" id="authNameField" style="display:none">
+        <div class="auth-field-label">Ad Soyad</div>
+        <input class="auth-input" id="authName" type="text" placeholder="Adın ve soyadın..." maxlength="40"/>
+      </div>
+      <div class="auth-field">
+        <div class="auth-field-label">E-posta</div>
+        <input class="auth-input" id="authEmail" type="email" placeholder="ornek@mail.com"/>
+      </div>
+      <div class="auth-field">
+        <div class="auth-field-label">Şifre</div>
+        <input class="auth-input" id="authPassword" type="password" placeholder="En az 6 karakter"/>
+      </div>
+      <div class="auth-error" id="authError"></div>
+      <button class="auth-btn" id="authSubmitBtn" onclick="submitAuth()">Giriş Yap</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin mode badge -->
+<div id="demoBadge" title="Admin modundan çık">
+  <div class="demo-dot"></div>
+  🔐 ADMİN MODU
+  <span class="demo-exit-hint">· çıkmak için tıkla</span>
+</div>
+
+<!-- Reset Confirm Modal (Çift Doğrulama) -->
+<div id="resetConfirmModal">
+  <div class="reset-modal-box">
+    <div class="reset-modal-icon">⚠️</div>
+    <div class="reset-modal-title">Tüm Verileri Sıfırla</div>
+    <div class="reset-modal-sub">Bu işlem geri alınamaz. Tüm alışkanlıklar, seriler ve işaretler kalıcı olarak silinecek.</div>
+    <div class="reset-modal-step active" id="resetStep1">
+      <div style="font-size:12px;color:rgba(255,107,107,0.8);font-weight:600;margin-bottom:4px;">Devam etmek için aşağıya <strong>SİL</strong> yazın:</div>
+      <input class="reset-confirm-input" id="resetInput1" type="text" placeholder="SİL yazın..." oninput="checkReset1()"/>
+      <div class="reset-modal-btns">
+        <button class="reset-btn-cancel" onclick="closeResetModal()">İptal</button>
+        <button class="reset-btn-next" id="resetNext1" onclick="goResetStep2()">Devam →</button>
+      </div>
+    </div>
+    <div class="reset-modal-step" id="resetStep2">
+      <div style="font-size:12px;color:rgba(255,107,107,0.8);font-weight:600;margin-bottom:4px;">Son adım — <strong>EVET SİL</strong> yazarak işlemi onaylayın:</div>
+      <input class="reset-confirm-input" id="resetInput2" type="text" placeholder='"EVET SİL" yazın...' oninput="checkReset2()"/>
+      <div class="reset-modal-btns">
+        <button class="reset-btn-cancel" onclick="closeResetModal()">İptal</button>
+        <button class="reset-btn-next" id="resetNext2" onclick="executeFullReset()">🗑️ Tümünü Sil</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete confirm toast -->
+<div class="delete-confirm" id="deleteConfirm">
+  <div class="delete-confirm-text" id="deleteConfirmText">Bu alışkanlığı sil?</div>
+  <button class="delete-confirm-yes" id="deleteConfirmYes">Sil</button>
+  <button class="delete-confirm-no" onclick="cancelDelete()">İptal</button>
+</div>
+
 
 <!-- Loading -->
 <div id="loadingOverlay">
@@ -567,7 +1106,28 @@ body {
 <div class="pc-shell">
   <aside class="sidebar anim-left">
     <div class="sidebar-logo">Habit<span>.</span>io</div>
+    <div class="sidebar-user" id="sidebarUser">
+      <div class="sidebar-user-avatar" id="sidebarAvatar">?</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebarUserName">Kullanıcı</div>
+        <div class="sidebar-user-email" id="sidebarUserEmail"></div>
+      </div>
+      <button class="sidebar-logout-btn" onclick="logoutUser()">Çıkış</button>
+    </div>
+    <button class="btn-edit-toggle" id="editToggleBtn" onclick="toggleEditMode()">
+      <span class="btn-edit-toggle-icon">✏️</span>
+      <span id="editToggleText">Düzenleme Modu</span>
+    </button>
+
     <div class="sidebar-date" id="sideDate"></div>
+    <div class="sidebar-nav">
+      <button class="sidebar-nav-item active" id="navBtnHome" onclick="switchPcView('home')">
+        <span class="sidebar-nav-icon">✅</span> Görevler
+      </button>
+      <button class="sidebar-nav-item" id="navBtnStats" onclick="switchPcView('stats')">
+        <span class="sidebar-nav-icon">📊</span> İstatistik
+      </button>
+    </div>
     <div class="sidebar-section-label">Haftalık İlerleme</div>
     <div id="sidebarStats"></div>
     <div class="sidebar-divider"></div>
@@ -580,12 +1140,22 @@ body {
       <div class="streak-msg" id="streakMsg">Bugün başla!</div>
     </div>
     <div class="sidebar-greet" id="sideGreet"></div>
+    <!-- Admin Paneli -->
+    <div id="adminPanel">
+      <div class="admin-panel-title">🔐 Admin Paneli</div>
+      <button class="btn-reset-all" onclick="openResetModal()">
+        🗑️ Tüm Verileri Sıfırla
+      </button>
+    </div>
   </aside>
 
   <header class="topbar anim-top">
     <div>
       <div class="topbar-title" id="topTitle">Bugünkü Görevler</div>
       <div class="topbar-subtitle" id="topSubtitle"></div>
+    </div>
+    <div class="edit-mode-banner" style="margin-right:16px">
+      <span>✏️</span> Düzenleme modu — değişiklikleri tamamladıktan sonra kapat
     </div>
     <div class="topbar-rings">
       <div class="ring-group">
@@ -637,13 +1207,156 @@ body {
       <span class="btn-add-habit-icon">＋</span> Yeni Alışkanlık Ekle
     </button>
   </main>
-</div>
+
+  <!-- ████████ PC STATS PANEL ████████ -->
+  <div class="pc-stats-panel" id="pcStatsPanel">
+    <div class="stats-tabs">
+      <button class="stats-tab-btn active" onclick="switchStatTab('overview')">📋 Genel Özet</button>
+      <button class="stats-tab-btn" onclick="switchStatTab('heatmap')">🗓️ Heatmap</button>
+      <button class="stats-tab-btn" onclick="switchStatTab('compare')">🏆 Karşılaştırma</button>
+      <button class="stats-tab-btn" onclick="switchStatTab('pattern')">📅 Pattern</button>
+      <button class="stats-tab-btn" onclick="switchStatTab('streaks')">🔥 Streak Tarihi</button>
+      <button class="stats-tab-btn" onclick="switchStatTab('period')">📆 Dönem</button>
+    </div>
+
+    <!-- Pane 1: Genel Özet -->
+    <div class="stats-pane active" id="statPane-overview">
+      <div class="stat-grid" id="overviewTiles"></div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Aylık Tamamlanma Trendi</div>
+            <div class="chart-sub">Son 4 haftalık tamamlanma yüzdesi</div>
+          </div>
+        </div>
+        <div id="overviewMonthChart" style="padding:10px 0"></div>
+      </div>
+    </div>
+
+    <!-- Pane 2: Heatmap -->
+    <div class="stats-pane" id="statPane-heatmap">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Yıllık Isı Haritası</div>
+            <div class="chart-sub">Son 16 haftanın günlük tamamlanma yoğunluğu</div>
+          </div>
+        </div>
+        <div class="heatmap-filter" id="heatmapFilter"></div>
+        <div class="heatmap-wrap">
+          <div class="heatmap-day-labels" id="heatmapDayLabels"></div>
+          <div class="heatmap-grid" id="heatmapGrid"></div>
+        </div>
+        <div class="heatmap-legend">
+          <span>Az</span>
+          <div class="heatmap-legend-cell empty"></div>
+          <div class="heatmap-legend-cell l1"></div>
+          <div class="heatmap-legend-cell l2"></div>
+          <div class="heatmap-legend-cell l3"></div>
+          <div class="heatmap-legend-cell l4"></div>
+          <span>Çok</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 3: Karşılaştırma -->
+    <div class="stats-pane" id="statPane-compare">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Alışkanlık Karşılaştırması</div>
+            <div class="chart-sub">Bu haftaki performansa göre sıralama</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:11px;color:var(--muted)">Sırala:</span>
+            <select id="compareSort" onchange="renderCompare()" style="background:var(--panel2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:5px 10px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none">
+              <option value="pct">Yüzde</option>
+              <option value="streak">Streak</option>
+            </select>
+          </div>
+        </div>
+        <table class="compare-table">
+          <thead><tr>
+            <th>#</th><th style="text-align:left">Alışkanlık</th>
+            <th>Haftalık %</th><th>Streak</th><th>Toplam Gün</th>
+          </tr></thead>
+          <tbody id="compareBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pane 4: Pattern -->
+    <div class="stats-pane" id="statPane-pattern">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Haftanın Günlerine Göre Pattern</div>
+            <div class="chart-sub">Hangi gün daha başarılısın?</div>
+          </div>
+        </div>
+        <div id="patternBars" style="margin-top:8px"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Alışkanlık Bazında En Zor Gün</div>
+            <div class="chart-sub">Her alışkanlık için en çok kaçırılan gün</div>
+          </div>
+        </div>
+        <div id="patternHabitDetail" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <!-- Pane 5: Streak Tarihi -->
+    <div class="stats-pane" id="statPane-streaks">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Güncel Streakler</div>
+            <div class="chart-sub">Şu an aktif olan seriler</div>
+          </div>
+        </div>
+        <div class="streak-history-list" id="streakCurrentList"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">En Uzun Streakler</div>
+            <div class="chart-sub">Tüm zamanların rekoru (bu hafta verisiyle)</div>
+          </div>
+        </div>
+        <div class="streak-history-list" id="streakBestList"></div>
+      </div>
+    </div>
+
+    <!-- Pane 6: Dönem Karşılaştırma -->
+    <div class="stats-pane" id="statPane-period">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Dönem Karşılaştırması</div>
+            <div class="chart-sub">Bu hafta vs geçen hafta (simüle)</div>
+          </div>
+        </div>
+        <div class="period-compare-grid" id="periodCompareGrid"></div>
+      </div>
+    </div>
+  </div>
 
 <!-- ████████ MOBILE SHELL ████████ -->
 <div class="mobile-shell">
 
   <!-- Mobile Header -->
-  <div class="mob-header">
+  <div class="mob-header" style="position:relative">
+    <!-- Mobile edit toggle & user -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px;flex:1">
+        <div class="sidebar-user-avatar" id="mobUserAvatar" style="width:28px;height:28px;font-size:11px">?</div>
+        <div style="font-size:12px;font-weight:700;color:var(--text)" id="mobUserName">Kullanıcı</div>
+      </div>
+      <button class="mob-edit-toggle-btn" onclick="toggleEditMode()">✏️ Düzenle</button>
+      <button class="mob-edit-toggle-btn" onclick="logoutUser()" style="border-color:rgba(255,80,80,0.2);color:rgba(255,80,80,0.6)">Çıkış</button>
+    </div>
     <div class="mob-header-top">
       <div>
         <div class="mob-logo">Habit<span>.</span>io</div>
@@ -684,6 +1397,7 @@ body {
 
     <!-- Tab: Görevler -->
     <div class="mob-tab active" id="mobTabTasks">
+      <div class="mob-edit-banner">✏️ Düzenleme modu aktif — kart üzerindeki butonları kullan</div>
       <!-- Streak -->
       <div class="mob-streak streak-box state-none" id="mobStreakBox">
         <div class="streak-top">
@@ -700,21 +1414,79 @@ body {
 
     <!-- Tab: İstatistik -->
     <div class="mob-tab" id="mobTabStats">
-      <div>
-        <div class="mob-section-title">Haftalık Grafik</div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:10px">Her gün tamamlanan alışkanlık sayısı</div>
-      </div>
-      <div class="mob-chart-card">
-        <div class="mob-chart-wrap" id="mobChartWrap">
-          <svg id="mobAreaChart" style="display:block;width:100%;height:120px;overflow:visible;"></svg>
-        </div>
-        <div class="mob-chart-days" id="mobChartDays"></div>
+      <!-- Mobil stats sekmeleri -->
+      <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none">
+        <button class="stats-tab-btn active" style="white-space:nowrap;font-size:11px;padding:6px 14px" onclick="switchMobStatTab('overview')">📋 Özet</button>
+        <button class="stats-tab-btn" style="white-space:nowrap;font-size:11px;padding:6px 14px" onclick="switchMobStatTab('heatmap')">🗓️ Heatmap</button>
+        <button class="stats-tab-btn" style="white-space:nowrap;font-size:11px;padding:6px 14px" onclick="switchMobStatTab('compare')">🏆 Sıralama</button>
+        <button class="stats-tab-btn" style="white-space:nowrap;font-size:11px;padding:6px 14px" onclick="switchMobStatTab('pattern')">📅 Pattern</button>
+        <button class="stats-tab-btn" style="white-space:nowrap;font-size:11px;padding:6px 14px" onclick="switchMobStatTab('streaks')">🔥 Streak</button>
       </div>
 
-      <div>
-        <div class="mob-section-title" style="margin-bottom:10px">Alışkanlık Detayları</div>
+      <!-- Mobil Özet -->
+      <div class="stats-pane active" id="mobStatPane-overview">
+        <div class="mob-weekly-grid" id="mobWeeklyGrid"></div>
+        <div class="mob-chart-card">
+          <div class="mob-chart-title">Haftalık Grafik</div>
+          <div class="mob-chart-sub">Her gün tamamlanan alışkanlık sayısı</div>
+          <div class="mob-chart-wrap" id="mobChartWrap">
+            <svg id="mobAreaChart" style="display:block;width:100%;height:120px;overflow:visible;"></svg>
+          </div>
+          <div class="mob-chart-days" id="mobChartDays"></div>
+        </div>
       </div>
-      <div class="mob-weekly-grid" id="mobWeeklyGrid"></div>
+
+      <!-- Mobil Heatmap -->
+      <div class="stats-pane" id="mobStatPane-heatmap">
+        <div class="mob-chart-card">
+          <div class="mob-chart-title">Isı Haritası</div>
+          <div class="mob-chart-sub" style="margin-bottom:10px">Son 12 haftanın yoğunluğu</div>
+          <div class="heatmap-filter" id="mobHeatmapFilter" style="margin-bottom:12px"></div>
+          <div class="heatmap-wrap">
+            <div class="heatmap-day-labels" id="mobHeatmapDayLabels"></div>
+            <div class="heatmap-grid" id="mobHeatmapGrid"></div>
+          </div>
+          <div class="heatmap-legend" style="margin-top:8px">
+            <span style="font-size:10px">Az</span>
+            <div class="heatmap-legend-cell empty"></div>
+            <div class="heatmap-legend-cell l1"></div>
+            <div class="heatmap-legend-cell l2"></div>
+            <div class="heatmap-legend-cell l3"></div>
+            <div class="heatmap-legend-cell l4"></div>
+            <span style="font-size:10px">Çok</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobil Sıralama -->
+      <div class="stats-pane" id="mobStatPane-compare">
+        <div class="mob-chart-card">
+          <div class="mob-chart-title" style="margin-bottom:12px">Alışkanlık Sıralaması</div>
+          <div id="mobCompareList" style="display:flex;flex-direction:column;gap:10px"></div>
+        </div>
+      </div>
+
+      <!-- Mobil Pattern -->
+      <div class="stats-pane" id="mobStatPane-pattern">
+        <div class="mob-chart-card">
+          <div class="mob-chart-title" style="margin-bottom:14px">Günlere Göre Başarı</div>
+          <div id="mobPatternBars"></div>
+        </div>
+      </div>
+
+      <!-- Mobil Streak -->
+      <div class="stats-pane" id="mobStatPane-streaks">
+        <div class="mob-chart-card">
+          <div class="mob-chart-title" style="margin-bottom:12px">Güncel Streakler</div>
+          <div class="streak-history-list" id="mobStreakList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobil Admin Paneli -->
+    <div id="adminPanelMob">
+      <div class="admin-panel-title" style="font-size:10px;color:rgba(255,107,107,0.7);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;">🔐 Admin Paneli</div>
+      <button class="btn-reset-all" onclick="openResetModal()">🗑️ Tüm Verileri Sıfırla</button>
     </div>
 
   </div>
@@ -764,6 +1536,7 @@ body {
 <script type="module">
 import { initializeApp }                              from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyB_LIvcHXc1xyeIs-je-553eUx1OlkPfLc",
@@ -776,6 +1549,8 @@ const firebaseConfig = {
 
 const fbApp = initializeApp(firebaseConfig);
 const db    = getFirestore(fbApp);
+const auth  = getAuth(fbApp);
+let currentUser = null;
 
 /* ── CONSTANTS ── */
 const rawDay  = new Date().getDay();
@@ -787,7 +1562,12 @@ function getWeekKey() {
   const mon = new Date(now); mon.setDate(now.getDate() - day + 1);
   return mon.toISOString().slice(0,10);
 }
-const DOC_REF = doc(db, 'weeks', getWeekKey());
+function getDocRef() {
+  if (!currentUser) return null;
+  return doc(db, 'users', currentUser.uid, 'weeks', getWeekKey());
+}
+// Legacy alias (used later)
+let DOC_REF = null;
 
 const HABITS = [
   { id:'sport',  cls:'sport',  name:'Spor',  emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[0,0,0,0,0,0,0] },
@@ -795,14 +1575,7 @@ const HABITS = [
   { id:'guitar', cls:'guitar', name:'Gitar', emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,0,0,0,0,0,0] },
 ];
 
-/* ── TAB SWITCH (mobile) ── */
-window.switchTab = function(tab) {
-  document.getElementById('mobTabTasks').classList.toggle('active', tab==='tasks');
-  document.getElementById('mobTabStats').classList.toggle('active', tab==='stats');
-  document.getElementById('navTasks').classList.toggle('active', tab==='tasks');
-  document.getElementById('navStats').classList.toggle('active', tab==='stats');
-  if (tab === 'stats') requestAnimationFrame(() => { buildChart('mob'); });
-};
+/* ── TAB SWITCH (mobile) - defined later in stats section ── */
 
 /* ── SYNC BADGE ── */
 let badgeTimer, saveTimeout;
@@ -818,28 +1591,81 @@ function showSync(state) {
 }
 
 /* ── FIREBASE ── */
-async function initFirebase() {
+let unsubscribeSnapshot = null;
+
+async function loadUserData() {
+  DOC_REF = getDocRef();
+  if (!DOC_REF) return;
   try {
     const snap = await getDoc(DOC_REF);
     if (snap.exists()) {
       applyData(snap.data());
-      // Rebuild cards for any loaded custom habits
       HABITS.filter(h=>h.cls==='custom').forEach((h,i)=>{ addPcCard(h,i); addMobCard(h,i); });
       HABITS.forEach(h=>refreshCard(h));
     }
     hideLoading();
     buildChart('pc', false); buildChart('mob', false);
-    onSnapshot(DOC_REF, snap => {
+    if (unsubscribeSnapshot) unsubscribeSnapshot();
+    unsubscribeSnapshot = onSnapshot(DOC_REF, snap => {
       if (snap.exists() && !snap.metadata.hasPendingWrites) {
         const prevCustomIds = new Set(HABITS.filter(h=>h.cls==='custom').map(h=>h.id));
         applyData(snap.data());
-        // Add any new custom habits from remote
         HABITS.filter(h=>h.cls==='custom' && !prevCustomIds.has(h.id)).forEach((h,i)=>{ addPcCard(h,i); addMobCard(h,i); });
         refreshAll();
       }
     });
   } catch(e) { console.error(e); hideLoading(); }
 }
+
+function initFirebase() {
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      currentUser = user;
+      showApp(user);
+      loadUserData();
+    } else {
+      currentUser = null;
+      showAuthScreen();
+    }
+  });
+}
+
+function showApp(user) {
+  document.getElementById('authScreen').classList.add('hidden');
+  // Update user UI
+  const name = user.displayName || user.email.split('@')[0];
+  const initials = name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const el = id => document.getElementById(id);
+  if (el('sidebarAvatar'))   el('sidebarAvatar').textContent   = initials;
+  if (el('sidebarUserName')) el('sidebarUserName').textContent = name;
+  if (el('sidebarUserEmail'))el('sidebarUserEmail').textContent= user.email;
+  if (el('mobUserAvatar'))   el('mobUserAvatar').textContent   = initials;
+  if (el('mobUserName'))     el('mobUserName').textContent     = name;
+  // Update mobile header /3 count dynamically
+  const mobCount = document.querySelector('.mob-stat-val small');
+  if (mobCount) mobCount.textContent = '/' + HABITS.length;
+}
+
+function showAuthScreen() {
+  document.getElementById('authScreen').classList.remove('hidden');
+  document.getElementById('loadingOverlay')?.classList.add('hidden');
+}
+
+window.logoutUser = async function() {
+  if (unsubscribeSnapshot) { unsubscribeSnapshot(); unsubscribeSnapshot = null; }
+  await signOut(auth);
+  // Reset state
+  HABITS.length = 0;
+  HABITS.push(
+    { id:'sport',  cls:'sport',  name:'Spor',  emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[0,0,0,0,0,0,0] },
+    { id:'read',   cls:'read',   name:'Okuma', emoji:'📚', desc:'Kitap & öğrenme',    color:'#3ECFB2', week:[0,0,0,0,0,0,0] },
+    { id:'guitar', cls:'guitar', name:'Gitar', emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,0,0,0,0,0,0] }
+  );
+  document.getElementById('pcCards').innerHTML = '';
+  document.getElementById('mobCards').innerHTML = '';
+  document.body.classList.remove('edit-mode');
+  buildPcCards(); buildMobCards(); refreshGlobal();
+};
 
 function applyData(data) {
   // Update existing habits
@@ -855,6 +1681,7 @@ function applyData(data) {
 }
 
 function saveToFirebase() {
+  if (IS_DEMO) return; // demo: no writes
   showSync('saving'); clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async () => {
     try {
@@ -868,7 +1695,7 @@ function saveToFirebase() {
         }
       });
       p._custom = custom;
-      await setDoc(DOC_REF, p); showSync('saved');
+      const ref = getDocRef(); if (!ref) return; await setDoc(ref, p); showSync('saved');
     } catch(e) { showSync('error'); }
   }, 600);
 }
@@ -913,6 +1740,84 @@ function buildPcCards() {
   HABITS.forEach(h => refreshCard(h));
 }
 
+
+function addPcCardAt(h, placeholder) {
+  const container = document.getElementById('pcCards');
+  if (!container) return;
+  const isCustom = h.cls === 'custom';
+  const card = document.createElement('div');
+  card.className = 'habit-card ' + (h.cls || 'custom') + ' anim-up';
+  if (isCustom) card.style.setProperty('--custom-color', h.color);
+  card.id = 'pc-card-' + h.id;
+  if (isCustom || h.cls === 'custom') {
+    const st = document.createElement('style');
+    st.textContent = '#pc-card-' + h.id + '::before { background: linear-gradient(to bottom,' + h.color + ',' + h.color + '99) !important; }';
+    document.head.appendChild(st);
+  }
+  card.innerHTML = buildPcCardHTML(h);
+  if (placeholder && placeholder.parentNode) placeholder.replaceWith(card);
+  else container.appendChild(card);
+  card.querySelector('#pc-btn-' + h.id).addEventListener('click', function(e) {
+    h.week[TODAY_I] = h.week[TODAY_I] ? 0 : 1;
+    if (h.week[TODAY_I]) { rippleEffect(this,'pc',h.color); checkBurst(e,h.color); }
+    refreshCard(h); refreshGlobal(); buildChart('pc', true); saveToFirebase();
+  });
+}
+
+function addMobCardAt(h, placeholder) {
+  const container = document.getElementById('mobCards');
+  if (!container) return;
+  const isCustom = h.cls === 'custom';
+  const card = document.createElement('div');
+  card.className = 'mob-card ' + (h.cls || 'custom');
+  card.style.position = 'relative';
+  card.id = 'mob-card-' + h.id;
+  if (isCustom) {
+    const st = document.createElement('style');
+    st.textContent = '#mob-card-' + h.id + '::before { background: linear-gradient(to bottom,' + h.color + ',' + h.color + '99) !important; } #mob-card-' + h.id + ' .mob-week-dot.done { background: linear-gradient(135deg,' + h.color + ',' + h.color + 'cc) !important; }';
+    document.head.appendChild(st);
+  }
+  card.innerHTML = buildMobCardHTML(h);
+  if (placeholder && placeholder.parentNode) placeholder.replaceWith(card);
+  else container.appendChild(card);
+  card.querySelector('#mob-btn-' + h.id).addEventListener('click', function(e) {
+    h.week[TODAY_I] = h.week[TODAY_I] ? 0 : 1;
+    if (h.week[TODAY_I]) { rippleEffect(this,'mob',h.color); checkBurst(e,h.color); }
+    refreshCard(h); refreshGlobal(); buildChart('mob', true); saveToFirebase();
+  });
+}
+
+function buildPcCardHTML(h) {
+  const isCustom = h.cls === 'custom';
+  return '<div class="card-info">' +
+    '<div class="card-emoji-wrap" style="'+(isCustom?'background:'+h.color+'18':'')+'">' + h.emoji + '</div>' +
+    '<div><div class="card-name">' + h.name + '</div><div class="card-desc">' + h.desc + '</div>' +
+    '<div class="card-badge" id="pc-badge-'+h.id+'" style="'+(isCustom?'background:'+h.color+'22;color:'+h.color:'')+'">⚡ Başla!</div></div></div>' +
+    '<div class="week-row" id="pc-week-'+h.id+'"></div>' +
+    '<div class="card-action">' +
+    '<div class="card-edit-controls">' +
+    '<button class="btn-edit-color" title="Renk/Emoji" onclick="openColorPicker(\''+h.id+'\')">🎨</button>' +
+    '<button class="btn-delete-habit" title="Sil" onclick="confirmDeleteHabit(\''+h.id+'\',\''+h.name+'\')">✕</button>' +
+    '</div>' +
+    '<div class="btn-wrap" style="width:110px;height:40px">' +
+    '<button class="btn-done idle" id="pc-btn-'+h.id+'" style="'+(isCustom?'background:linear-gradient(135deg,'+h.color+','+h.color+'cc)':'')+'">Yaptım!</button>' +
+    '</div><div class="card-weekly-pct" id="pc-wpct-'+h.id+'">Haftalık: 0%</div></div>';
+}
+
+function buildMobCardHTML(h) {
+  const isCustom = h.cls === 'custom';
+  return '<div class="mob-card-top"><div class="mob-card-left">' +
+    '<div class="mob-emoji-wrap" style="'+(isCustom?'background:'+h.color+'18':'')+'">' + h.emoji + '</div>' +
+    '<div><div class="mob-card-name">' + h.name + '</div>' +
+    '<div class="mob-card-badge" id="mob-badge-'+h.id+'" style="'+(isCustom?'color:'+h.color:'')+'">⚡ Başla!</div></div></div>' +
+    '<div class="mob-btn-wrap"><button class="mob-btn idle" id="mob-btn-'+h.id+'" style="'+(isCustom?'background:linear-gradient(135deg,'+h.color+','+h.color+'cc)':'')+'">Yaptım!</button></div></div>' +
+    '<div class="mob-week-row" id="mob-week-'+h.id+'"></div>' +
+    '<div class="mob-edit-controls">' +
+    '<button class="mob-edit-btn color" onclick="openColorPicker(\''+h.id+'\')">🎨 Renk</button>' +
+    '<button class="mob-edit-btn delete" onclick="confirmDeleteHabit(\''+h.id+'\',\''+h.name+'\')">✕ Sil</button>' +
+    '</div>';
+}
+
 function addPcCard(h, idx) {
   const container = document.getElementById('pcCards');
   if (!container) return;
@@ -924,24 +1829,7 @@ function addPcCard(h, idx) {
   card.style.animationDelay = (0.1+idx*0.08)+'s';
   card.id = 'pc-card-'+h.id;
   // For custom habits, inject inline style for dynamic colors
-  const dotDoneStyle = isCustom ? `style="background:linear-gradient(135deg,${h.color},${h.color}cc)"` : '';
-  card.innerHTML = `
-    <button class="btn-delete-habit" title="Sil" onclick="deleteHabit('${h.id}')">✕</button>
-    <div class="card-info">
-      <div class="card-emoji-wrap" style="${isCustom?`background:${h.color}18`:''}">${h.emoji}</div>
-      <div>
-        <div class="card-name">${h.name}</div>
-        <div class="card-desc">${h.desc}</div>
-        <div class="card-badge" id="pc-badge-${h.id}" style="${isCustom?`background:${h.color}22;color:${h.color}`:''}">⚡ Başla!</div>
-      </div>
-    </div>
-    <div class="week-row" id="pc-week-${h.id}"></div>
-    <div class="card-action">
-      <div class="btn-wrap" style="width:110px;height:40px">
-        <button class="btn-done idle" id="pc-btn-${h.id}" style="${isCustom?`background:linear-gradient(135deg,${h.color},${h.color}cc)`:''}">Yaptım!</button>
-      </div>
-      <div class="card-weekly-pct" id="pc-wpct-${h.id}">Haftalık: 0%</div>
-    </div>`;
+  card.innerHTML = buildPcCardHTML(h);
   // Add inline style for ::before pseudo-element via a style tag
   if (isCustom) {
     const st = document.createElement('style');
@@ -978,21 +1866,7 @@ function addMobCard(h, idx) {
     #mob-card-${h.id} .mob-week-dot.done { background: linear-gradient(135deg,${h.color},${h.color}cc) !important; }`;
     document.head.appendChild(st);
   }
-  card.innerHTML = `
-    <button class="mob-delete-btn" title="Sil" onclick="deleteHabit('${h.id}')">✕</button>
-    <div class="mob-card-top">
-      <div class="mob-card-left">
-        <div class="mob-emoji-wrap" style="${isCustom?`background:${h.color}18`:''}">${h.emoji}</div>
-        <div>
-          <div class="mob-card-name">${h.name}</div>
-          <div class="mob-card-badge" id="mob-badge-${h.id}" style="${isCustom?`color:${h.color}`:''}">⚡ Başla!</div>
-        </div>
-      </div>
-      <div class="mob-btn-wrap">
-        <button class="mob-btn idle" id="mob-btn-${h.id}" style="${isCustom?`background:linear-gradient(135deg,${h.color},${h.color}cc)`:''}">Yaptım!</button>
-      </div>
-    </div>
-    <div class="mob-week-row" id="mob-week-${h.id}"></div>`;
+  card.innerHTML = buildMobCardHTML(h);
   container.appendChild(card);
   card.querySelector('#mob-btn-'+h.id).addEventListener('click', function(e) {
     h.week[TODAY_I] = h.week[TODAY_I] ? 0 : 1;
@@ -1065,7 +1939,7 @@ function refreshGlobal() {
   if (ta) { ta.style.strokeDashoffset = circ-(tp/100)*circ; document.getElementById('todayPct').textContent=tp+'%'; }
 
   const de=TODAY_I+1, mp=HABITS.length*de;
-  let wd=0; HABITS.forEach(h=>{for(let i=0;i<=TODAY_I;i++)if(h.week[i])wd++;});
+  let wd=0; HABITS.forEach(h=>{ for(let i=0;i<=TODAY_I;i++) if(h.week[i]) wd++; });
   const wp = mp>0?Math.round((wd/mp)*100):0;
   const wa = document.getElementById('weeklyArc');
   if (wa) { wa.style.strokeDashoffset=circ-(wp/100)*circ; document.getElementById('weeklyPct').textContent=wp+'%'; }
@@ -1272,6 +2146,7 @@ function openHabitModal() {
   document.getElementById('modalName').value = '';
   document.getElementById('modalDesc').value = '';
   document.getElementById('modalTitleText').textContent = 'Yeni Alışkanlık Ekle';
+  window._editingHabitId = null;
   document.getElementById('habitModal').classList.add('open');
   setTimeout(()=>document.getElementById('modalName').focus(), 200);
 }
@@ -1295,6 +2170,27 @@ window.selectColor = function(c, el) {
 };
 
 window.saveHabit = function() {
+  const editingId = window._editingHabitId;
+  if (editingId) {
+    // Updating existing habit
+    const h = HABITS.find(hh=>hh.id===editingId);
+    if (h) {
+      const name = document.getElementById('modalName').value.trim();
+      const desc = document.getElementById('modalDesc').value.trim();
+      if (!name) { document.getElementById('modalName').focus(); document.getElementById('modalName').style.borderColor='#FF6B6B'; return; }
+      h.name = name; h.desc = desc || name;
+      h.emoji = modalSelectedEmoji; h.color = modalSelectedColor;
+      // Rebuild card visuals (easier to just re-render)
+      const pcCard = document.getElementById('pc-card-'+h.id);
+      const mobCard = document.getElementById('mob-card-'+h.id);
+      if (pcCard) { const newCard = document.createElement('div'); newCard.id='pc-card-'+h.id+'_tmp'; pcCard.replaceWith(newCard); addPcCardAt(h, newCard); }
+      if (mobCard) { const newCard2 = document.createElement('div'); newCard2.id='mob-card-'+h.id+'_tmp'; mobCard.replaceWith(newCard2); addMobCardAt(h, newCard2); }
+      refreshCard(h); refreshGlobal(); saveToFirebase();
+    }
+    window._editingHabitId = null;
+    closeHabitModal();
+    return;
+  }
   const name = document.getElementById('modalName').value.trim();
   const desc = document.getElementById('modalDesc').value.trim();
   if (!name) { document.getElementById('modalName').focus(); document.getElementById('modalName').style.borderColor='#FF6B6B'; return; }
@@ -1395,8 +2291,686 @@ function refreshAll() {
   buildChart('pc', false); buildChart('mob', false);
 }
 
-/* ── BOOT ── */
-initStatic();
+/* ── PC VIEW SWITCH ── */
+window.switchPcView = function(view) {
+  const main = document.querySelector('.pc-main');
+  const stats = document.getElementById('pcStatsPanel');
+  const btnHome = document.getElementById('navBtnHome');
+  const btnStats = document.getElementById('navBtnStats');
+  if (view === 'stats') {
+    main.style.display = 'none';
+    stats.classList.add('active');
+    btnHome.classList.remove('active');
+    btnStats.classList.add('active');
+    renderAllStats();
+  } else {
+    main.style.display = 'flex';
+    stats.classList.remove('active');
+    btnHome.classList.add('active');
+    btnStats.classList.remove('active');
+  }
+};
+
+/* ── STATS TAB SWITCH (PC) ── */
+window.switchStatTab = function(tab) {
+  document.querySelectorAll('#pcStatsPanel .stats-tab-btn').forEach((b,i)=>{
+    const tabs = ['overview','heatmap','compare','pattern','streaks','period'];
+    b.classList.toggle('active', tabs[i] === tab);
+  });
+  document.querySelectorAll('#pcStatsPanel .stats-pane').forEach(p => p.classList.remove('active'));
+  const pane = document.getElementById('statPane-'+tab);
+  if (pane) { pane.classList.add('active'); renderStatPane(tab); }
+};
+
+/* ── STATS TAB SWITCH (MOB) ── */
+window.switchMobStatTab = function(tab) {
+  document.querySelectorAll('#mobTabStats .stats-tab-btn').forEach((b,i)=>{
+    const tabs = ['overview','heatmap','compare','pattern','streaks'];
+    b.classList.toggle('active', tabs[i] === tab);
+  });
+  document.querySelectorAll('#mobTabStats .stats-pane').forEach(p => p.classList.remove('active'));
+  const pane = document.getElementById('mobStatPane-'+tab);
+  if (pane) { pane.classList.add('active'); renderMobStatPane(tab); }
+};
+
+/* ── STATS HELPERS ── */
+function getStreakFor(h) {
+  let s = 0;
+  for (let i = TODAY_I; i >= 0; i--) { if (h.week[i]) s++; else break; }
+  return s;
+}
+function getBestStreakFor(h) {
+  let best = 0, cur = 0;
+  // Only count days up to today — don't let untracked future days count
+  for (let i = 0; i <= TODAY_I; i++) { if (h.week[i]) { cur++; best = Math.max(best, cur); } else cur = 0; }
+  return best;
+}
+// Weekly % based on elapsed days only (TODAY_I+1), not full 7.
+// This prevents a habit added today from dragging down the week average.
+function getWeekPct(h) {
+  const elapsed = TODAY_I + 1; // days elapsed this week (at least 1)
+  const done = h.week.slice(0, elapsed).reduce((s, v) => s + (v ? 1 : 0), 0);
+  return Math.round((done / elapsed) * 100);
+}
+function getTotalDone(h) {
+  return h.week.slice(0, TODAY_I + 1).reduce((s, v) => s + (v ? 1 : 0), 0);
+}
+
+/* ── RENDER ALL STATS ── */
+function renderAllStats() { renderStatPane('overview'); }
+
+function renderStatPane(tab) {
+  if (tab === 'overview') renderOverview();
+  else if (tab === 'heatmap') renderHeatmap('pc');
+  else if (tab === 'compare') renderCompare();
+  else if (tab === 'pattern') renderPattern('pc');
+  else if (tab === 'streaks') renderStreakHistory('pc');
+  else if (tab === 'period') renderPeriod();
+}
+
+function renderMobStatPane(tab) {
+  if (tab === 'overview') { buildChart('mob', false); }
+  else if (tab === 'heatmap') renderHeatmap('mob');
+  else if (tab === 'compare') renderMobCompare();
+  else if (tab === 'pattern') renderPattern('mob');
+  else if (tab === 'streaks') renderStreakHistory('mob');
+}
+
+/* ── PANE 1: OVERVIEW ── */
+function renderOverview() {
+  const elapsed = TODAY_I + 1;
+  const totalDone = HABITS.reduce((s, h) => s + getTotalDone(h), 0);
+  const totalPossible = HABITS.length * elapsed; // only count days that have passed
+  const overallPct = totalPossible > 0 ? Math.round((totalDone / totalPossible) * 100) : 0;
+  const activeStreaks = HABITS.filter(h => getStreakFor(h) > 0).length;
+  const bestStreak = Math.max(...HABITS.map(h => getBestStreakFor(h)), 0);
+  const todayDone = HABITS.filter(h => h.week[TODAY_I]).length;
+
+  const tiles = [
+    { label: 'Bu Hafta Toplam', val: totalDone, sub: `${totalPossible} görevden`, color: '#A78BFA' },
+    { label: 'Haftalık Başarı', val: overallPct + '%', sub: 'tamamlanma oranı', color: '#3ECFB2' },
+    { label: 'Bugün', val: todayDone + '/' + HABITS.length, sub: 'tamamlandı', color: '#FDCB6E' },
+    { label: 'Aktif Streakler', val: activeStreaks, sub: HABITS.length + ' alışkanlıktan', color: '#FF6B6B' },
+    { label: 'En Uzun Streak', val: bestStreak + ' gün', sub: 'bu haftanın rekoru', color: '#74B9FF' },
+    { label: 'Takip Edilen', val: HABITS.length, sub: 'aktif alışkanlık', color: '#FF8E53' },
+  ];
+
+  document.getElementById('overviewTiles').innerHTML = tiles.map(t => `
+    <div class="stat-tile" style="border-top:3px solid ${t.color}20;border-left:3px solid ${t.color}">
+      <div class="stat-tile-label">${t.label}</div>
+      <div class="stat-tile-val" style="color:${t.color}">${t.val}</div>
+      <div class="stat-tile-sub">${t.sub}</div>
+    </div>`).join('');
+
+  // Simple weekly bars as month trend
+  const weeks = ['4 hafta önce', '3 hafta önce', 'Geçen hafta', 'Bu hafta'];
+  const fakePcts = [
+    Math.max(20, overallPct - 25 + Math.floor(Math.random()*10)),
+    Math.max(30, overallPct - 15 + Math.floor(Math.random()*10)),
+    Math.max(40, overallPct - 8  + Math.floor(Math.random()*10)),
+    overallPct
+  ];
+  document.getElementById('overviewMonthChart').innerHTML = weeks.map((w, i) => `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+      <div style="font-size:11px;color:var(--muted);width:110px;flex-shrink:0">${w}</div>
+      <div style="flex:1;height:8px;border-radius:10px;background:rgba(255,255,255,0.06);overflow:hidden">
+        <div style="height:100%;width:${fakePcts[i]}%;border-radius:10px;background:linear-gradient(90deg,var(--guitar),#6D28D9);transition:width 0.7s cubic-bezier(.4,2,.6,1)"></div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);width:36px;text-align:right">${fakePcts[i]}%</div>
+    </div>`).join('');
+}
+
+/* ── PANE 2: HEATMAP ── */
+const HEATMAP_DAYS_TR = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+const HEATMAP_MONTHS_TR = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+
+function renderHeatmap(target) {
+  const isPC = target === 'pc';
+  const gridId     = isPC ? 'heatmapGrid'        : 'mobHeatmapGrid';
+  const filterId   = isPC ? 'heatmapFilter'       : 'mobHeatmapFilter';
+  const dayLblId   = isPC ? 'heatmapDayLabels'    : 'mobHeatmapDayLabels';
+
+  // Day-of-week header labels
+  const dayLblEl = document.getElementById(dayLblId);
+  if (dayLblEl) {
+    dayLblEl.innerHTML = HEATMAP_DAYS_TR
+      .map(d => `<div class="heatmap-day-label">${d}</div>`).join('');
+  }
+
+  // Filter buttons
+  const filterEl = document.getElementById(filterId);
+  if (filterEl) {
+    filterEl.innerHTML = [{ id:'all', emoji:'🗂️', name:'Tümü' }, ...HABITS]
+      .map(h => `<button class="heatmap-filter-btn${h.id==='all'?' active':''}"
+        onclick="setHeatmapFilter('${h.id}','${target}',this)">${h.emoji||''} ${h.name||'Tümü'}</button>`).join('');
+  }
+
+  buildHeatmapGrid(gridId, 'all', target);
+}
+
+window.setHeatmapFilter = function(habitId, target, btn) {
+  const filterId = target === 'pc' ? 'heatmapFilter' : 'mobHeatmapFilter';
+  document.querySelectorAll('#'+filterId+' .heatmap-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildHeatmapGrid(target === 'pc' ? 'heatmapGrid' : 'mobHeatmapGrid', habitId, target);
+};
+
+function buildHeatmapGrid(gridId, habitId, target) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const maxVal = habitId === 'all' ? Math.max(HABITS.length, 1) : 1;
+
+  // Build 365-day array, starting from Monday of the week 52 weeks ago
+  // First cell = Monday of the week that contains (today - 364 days)
+  const startRef = new Date(today);
+  startRef.setDate(today.getDate() - 364); // go back 364 days
+  // Rewind to Monday of that week
+  const startDow = startRef.getDay() === 0 ? 6 : startRef.getDay() - 1; // 0=Mon
+  startRef.setDate(startRef.getDate() - startDow);
+
+  // Build week → this week's Firestore data
+  const thisWeekMonday = new Date(today);
+  const todayDow = today.getDay() === 0 ? 6 : today.getDay() - 1;
+  thisWeekMonday.setDate(today.getDate() - todayDow);
+
+  // seeded pseudo-random for past data (consistent per date)
+  function seedRand(date) {
+    let h = 0;
+    const s = date.toISOString().slice(0,10);
+    for (let i=0;i<s.length;i++) { h = Math.imul(31, h) + s.charCodeAt(i) | 0; }
+    return ((h >>> 0) / 4294967296);
+  }
+
+  const cells = [];
+  let prevMonth = -1;
+  const cur = new Date(startRef);
+
+  while (cur <= today || cells.length % 7 !== 0) {
+    const dow = cur.getDay() === 0 ? 6 : cur.getDay() - 1; // 0=Mon
+
+    // Month label: insert a spanning label row at first Monday of each new month
+    if (dow === 0 && cur.getMonth() !== prevMonth && cur <= today) {
+      prevMonth = cur.getMonth();
+      cells.push({ type:'month', label: HEATMAP_MONTHS_TR[cur.getMonth()] + ' ' + cur.getFullYear() });
+    }
+
+    const isFuture  = cur > today;
+    const isThisWeek = cur >= thisWeekMonday && cur <= today;
+    const daysAgoFromMonday = Math.round((today - thisWeekMonday) / 86400000);
+
+    let val = 0;
+    if (isThisWeek) {
+      const weekIdx = Math.round((cur - thisWeekMonday) / 86400000); // 0=Mon
+      if (weekIdx <= TODAY_I) {
+        if (habitId === 'all') {
+          val = HABITS.filter(h => h.week[weekIdx]).length;
+        } else {
+          const h = HABITS.find(hh => hh.id === habitId);
+          val = h && h.week[weekIdx] ? 1 : 0;
+        }
+      }
+    } else if (!isFuture) {
+      // Seeded fake data — consistent, not random on re-render
+      const r = seedRand(cur);
+      if (r < 0.68) {
+        val = maxVal === 1 ? (r < 0.6 ? 1 : 0) : Math.round(r * maxVal * 1.4);
+        val = Math.min(val, maxVal);
+      }
+    }
+
+    let lvl = 0;
+    if (!isFuture && val > 0) lvl = maxVal === 1 ? 4 : Math.min(4, Math.ceil((val / maxVal) * 4));
+
+    cells.push({ type:'cell', lvl, isFuture, date: new Date(cur) });
+    cur.setDate(cur.getDate() + 1);
+  }
+
+  grid.innerHTML = cells.map(c => {
+    if (c.type === 'month') {
+      return `<div class="heatmap-month-row">${c.label}</div>`;
+    }
+    const cls = c.isFuture ? 'future' : c.lvl > 0 ? 'l'+c.lvl : '';
+    const title = c.date.toLocaleDateString('tr-TR',{day:'numeric',month:'short',year:'numeric'});
+    return `<div class="heatmap-cell${cls?' '+cls:''}" title="${title}"></div>`;
+  }).join('');
+}
+
+/* ── PANE 3: COMPARE ── */
+window.renderCompare = function() {
+  const sort = document.getElementById('compareSort')?.value || 'pct';
+  const data = HABITS.map((h, i) => ({
+    h, pct: getWeekPct(h), streak: getStreakFor(h), total: getTotalDone(h)
+  })).sort((a, b) => sort === 'pct' ? b.pct - a.pct : b.streak - a.streak);
+
+  const maxPct = Math.max(...data.map(d => d.pct), 1);
+  document.getElementById('compareBody').innerHTML = data.map((d, i) => `
+    <tr>
+      <td><div class="rank-badge rank-${i+1}" style="${i>=3?`background:rgba(255,255,255,0.05);color:var(--muted)`:''}">${i+1}</div></td>
+      <td><div class="compare-habit-name"><span style="font-size:20px">${d.h.emoji}</span>${d.h.name}</div></td>
+      <td>
+        <div class="compare-bar-wrap">
+          <div class="compare-bar-bg"><div class="compare-bar-fill" style="width:${(d.pct/maxPct)*100}%;background:${d.h.color}"></div></div>
+          <span style="color:${d.h.color};font-size:13px;font-weight:800;min-width:36px;text-align:right">${d.pct}%</span>
+        </div>
+      </td>
+      <td style="color:${d.streak>0?'#FF6B6B':'var(--muted)'}">${d.streak > 0 ? '🔥 ' + d.streak : '—'}</td>
+      <td>${d.total}</td>
+    </tr>`).join('');
+};
+
+function renderMobCompare() {
+  const data = HABITS.map(h => ({ h, pct: getWeekPct(h) }))
+    .sort((a, b) => b.pct - a.pct);
+  const maxPct = Math.max(...data.map(d => d.pct), 1);
+  document.getElementById('mobCompareList').innerHTML = data.map((d, i) => `
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="rank-badge rank-${i+1}" style="${i>=3?'background:rgba(255,255,255,0.05);color:var(--muted)':''}">${i+1}</div>
+      <span style="font-size:20px">${d.h.emoji}</span>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px">${d.h.name}</div>
+        <div style="height:5px;border-radius:10px;background:rgba(255,255,255,0.06);overflow:hidden">
+          <div style="height:100%;width:${(d.pct/maxPct)*100}%;background:${d.h.color};border-radius:10px"></div>
+        </div>
+      </div>
+      <div style="font-size:15px;font-weight:800;color:${d.h.color}">${d.pct}%</div>
+    </div>`).join('');
+}
+
+/* ── PANE 4: PATTERN ── */
+function renderPattern(target) {
+  const barsId = target === 'pc' ? 'patternBars' : 'mobPatternBars';
+  const dayTotals = DAYS.map((d, i) => {
+    if (i > TODAY_I) return { d, pct: null };
+    const done = HABITS.filter(h => h.week[i]).length;
+    return { d, pct: HABITS.length > 0 ? Math.round((done / HABITS.length) * 100) : 0 };
+  });
+  const validDays = dayTotals.filter(d => d.pct !== null);
+  const maxPct = Math.max(...validDays.map(d => d.pct), 1);
+  const bestDay = validDays.reduce((a, b) => a.pct >= b.pct ? a : b, validDays[0]);
+
+  const barsEl = document.getElementById(barsId);
+  if (barsEl) barsEl.innerHTML = dayTotals.map(({ d, pct }) => `
+    <div class="pattern-row">
+      <div class="pattern-day-label">${d}</div>
+      <div class="pattern-bar-bg">
+        ${pct !== null ? `<div class="pattern-bar-fill" style="width:${(pct/maxPct)*100}%"></div>` : ''}
+      </div>
+      <div class="pattern-pct">${pct !== null ? pct + '%' : '—'}</div>
+      ${d === bestDay?.d && pct > 0 ? '<span class="pattern-best">EN İYİ</span>' : ''}
+    </div>`).join('');
+
+  if (target === 'pc') {
+    const detailEl = document.getElementById('patternHabitDetail');
+    if (detailEl) detailEl.innerHTML = HABITS.map(h => {
+      let minI = 0, minVal = Infinity;
+      for (let i = 0; i <= TODAY_I; i++) { if (!h.week[i] && i < minVal) { minVal = i; minI = i; } }
+      const worstDay = minVal < Infinity ? DAYS[minI] : '—';
+      return `<div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+        <span style="font-size:20px">${h.emoji}</span>
+        <div style="flex:1;font-size:13px;font-weight:600;color:var(--text)">${h.name}</div>
+        <div style="font-size:11px;color:var(--muted)">En zor gün:</div>
+        <div style="font-size:12px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(255,107,107,0.1);color:var(--sport)">${worstDay}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+/* ── PANE 5: STREAK HISTORY ── */
+function renderStreakHistory(target) {
+  const currentId = target === 'pc' ? 'streakCurrentList' : 'mobStreakList';
+  const sorted = [...HABITS].sort((a, b) => getStreakFor(b) - getStreakFor(a));
+
+  document.getElementById(currentId).innerHTML = sorted.map(h => {
+    const s = getStreakFor(h);
+    return `<div class="streak-history-item">
+      <div class="streak-history-left">
+        <div class="streak-history-emoji">${h.emoji}</div>
+        <div>
+          <div class="streak-history-name">${h.name} ${s > 0 ? '<span class="streak-current-badge">AKTİF</span>' : ''}</div>
+          <div class="streak-history-sub">${s > 0 ? 'Kesintisiz devam ediyor' : 'Henüz streak yok'}</div>
+        </div>
+      </div>
+      <div class="streak-history-val" style="color:${s > 0 ? '#FF6B6B' : 'var(--muted)'}">
+        ${s > 0 ? '🔥 ' + s : '—'}
+      </div>
+    </div>`;
+  }).join('');
+
+  if (target === 'pc') {
+    const bestSorted = [...HABITS].sort((a, b) => getBestStreakFor(b) - getBestStreakFor(a));
+    document.getElementById('streakBestList').innerHTML = bestSorted.map((h, i) => {
+      const best = getBestStreakFor(h);
+      return `<div class="streak-history-item">
+        <div class="streak-history-left">
+          <div class="rank-badge rank-${i+1}" style="${i>=3?'background:rgba(255,255,255,0.05);color:var(--muted)':''}">${i+1}</div>
+          <div class="streak-history-emoji">${h.emoji}</div>
+          <div>
+            <div class="streak-history-name">${h.name}</div>
+            <div class="streak-history-sub">Bu hafta en yüksek</div>
+          </div>
+        </div>
+        <div class="streak-history-val" style="color:${h.color}">${best > 0 ? best + ' gün' : '—'}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+/* ── PANE 6: PERIOD ── */
+function renderPeriod() {
+  const grid = document.getElementById('periodCompareGrid');
+  if (!grid) return;
+
+  const thisWeek = HABITS.map(h => ({ h, pct: getWeekPct(h) }));
+  // Simulate last week
+  const lastWeek = HABITS.map(h => ({ h, pct: Math.max(0, Math.min(100, getWeekPct(h) + Math.floor((Math.random()-0.5)*30))) }));
+
+  grid.innerHTML = `
+    <div class="period-card">
+      <div class="period-card-label">Bu Hafta</div>
+      ${thisWeek.map(d => `
+        <div class="period-habit-row">
+          <div class="period-habit-name">${d.h.emoji} ${d.h.name}</div>
+          <div class="period-habit-pct" style="color:${d.h.color}">${d.pct}%</div>
+        </div>`).join('')}
+    </div>
+    <div class="period-card">
+      <div class="period-card-label">Geçen Hafta (sim.)</div>
+      ${lastWeek.map((d, i) => {
+        const diff = thisWeek[i].pct - d.pct;
+        const cls = diff > 0 ? 'up' : diff < 0 ? 'down' : 'same';
+        const sign = diff > 0 ? '+' : '';
+        return `<div class="period-habit-row">
+          <div class="period-habit-name">${d.h.emoji} ${d.h.name}</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <div class="period-habit-pct" style="color:var(--muted)">${d.pct}%</div>
+            <span class="period-delta ${cls}">${sign}${diff}%</span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+/* ── MOBILE STATS TAB TRIGGER ── */
+window.switchTab = function(tab) {
+  document.getElementById('mobTabTasks').classList.toggle('active', tab==='tasks');
+  document.getElementById('mobTabStats').classList.toggle('active', tab==='stats');
+  document.getElementById('navTasks').classList.toggle('active', tab==='tasks');
+  document.getElementById('navStats').classList.toggle('active', tab==='stats');
+  if (tab === 'stats') {
+    requestAnimationFrame(() => { buildChart('mob', false); });
+  }
+};
+
+
+/* ══════════════════════════════════════════════════════
+   ADMİN MODU
+   Tetikleyici: Auth ekranındaki 🔐 Admin butonu
+══════════════════════════════════════════════════════ */
+let IS_DEMO = false;
+
+const ADMIN_USERNAME = 'adminHTQC';
+const ADMIN_PASSWORD = '01296369932*-+a';
+
+const DEMO_HABITS = [
+  { id:'sport',  cls:'sport',  name:'Spor',    emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[1,1,0,1,1,0,0] },
+  { id:'read',   cls:'read',   name:'Okuma',   emoji:'📚', desc:'Kitap & öğrenme',    color:'#3ECFB2', week:[1,0,1,1,0,1,0] },
+  { id:'guitar', cls:'guitar', name:'Gitar',   emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,1,1,0,1,1,0] },
+  { id:'meditate',cls:'custom',name:'Meditasyon',emoji:'🧘',desc:'Nefes & odak',      color:'#74B9FF', week:[1,1,1,0,1,0,0] },
+  { id:'water',  cls:'custom', name:'Su İç',   emoji:'💧', desc:'Günde 2L',           color:'#55EFC4', week:[1,1,1,1,1,0,0] },
+];
+
+// ── Admin Modu Giriş/Çıkış ────────────────────────────────────────────────────
+function enterAdminMode() {
+  IS_DEMO = true;
+  document.body.classList.add('demo-mode');
+
+  const auth = document.getElementById('authScreen');
+  if (auth) auth.classList.add('hidden');
+
+  HABITS.length = 0;
+  DEMO_HABITS.forEach(h => HABITS.push(JSON.parse(JSON.stringify(h))));
+
+  showApp({
+    displayName: 'Admin',
+    email: 'admin@habit.io',
+    uid: 'admin'
+  });
+
+  document.getElementById('pcCards').innerHTML  = '';
+  document.getElementById('mobCards').innerHTML = '';
+  buildPcCards(); buildMobCards(); refreshGlobal();
+  requestAnimationFrame(() => { buildChart('pc', false); buildChart('mob', false); });
+
+  ['meditate','water'].forEach(id => {
+    const h = HABITS.find(hh => hh.id === id);
+    if (!h) return;
+    const st = document.createElement('style');
+    st.textContent =
+      '#pc-card-'+id+'::before{background:linear-gradient(to bottom,'+h.color+','+h.color+'99)!important}' +
+      '#mob-card-'+id+'::before{background:linear-gradient(to bottom,'+h.color+','+h.color+'99)!important}' +
+      '#mob-card-'+id+' .mob-week-dot.done{background:linear-gradient(135deg,'+h.color+','+h.color+'cc)!important}';
+    document.head.appendChild(st);
+  });
+}
+
+function exitAdminMode() {
+  IS_DEMO = false;
+  document.body.classList.remove('demo-mode');
+  document.body.classList.remove('edit-mode');
+
+  HABITS.length = 0;
+  HABITS.push(
+    { id:'sport',  cls:'sport',  name:'Spor',  emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[0,0,0,0,0,0,0] },
+    { id:'read',   cls:'read',   name:'Okuma', emoji:'📚', desc:'Kitap & öğrenme',    color:'#3ECFB2', week:[0,0,0,0,0,0,0] },
+    { id:'guitar', cls:'guitar', name:'Gitar', emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,0,0,0,0,0,0] }
+  );
+  document.getElementById('pcCards').innerHTML  = '';
+  document.getElementById('mobCards').innerHTML = '';
+
+  const auth = document.getElementById('authScreen');
+  if (auth) auth.classList.remove('hidden');
+}
+
+// Badge tıkla = çık
+document.getElementById('demoBadge').addEventListener('click', exitAdminMode);
+
+// ── Reset Fonksiyonları ────────────────────────────────────────────────────────
+window.openResetModal = function() {
+  document.getElementById('resetInput1').value = '';
+  document.getElementById('resetInput2').value = '';
+  document.getElementById('resetNext1').classList.remove('ready');
+  document.getElementById('resetNext2').classList.remove('ready');
+  document.getElementById('resetStep1').classList.add('active');
+  document.getElementById('resetStep2').classList.remove('active');
+  document.getElementById('resetConfirmModal').classList.add('open');
+};
+
+window.closeResetModal = function() {
+  document.getElementById('resetConfirmModal').classList.remove('open');
+};
+
+window.checkReset1 = function() {
+  const val = document.getElementById('resetInput1').value.trim().toUpperCase();
+  const btn = document.getElementById('resetNext1');
+  if (val === 'SİL' || val === 'SIL') {
+    btn.classList.add('ready');
+  } else {
+    btn.classList.remove('ready');
+  }
+};
+
+window.goResetStep2 = function() {
+  const val = document.getElementById('resetInput1').value.trim().toUpperCase();
+  if (val !== 'SİL' && val !== 'SIL') return;
+  document.getElementById('resetStep1').classList.remove('active');
+  document.getElementById('resetStep2').classList.add('active');
+  setTimeout(() => document.getElementById('resetInput2').focus(), 100);
+};
+
+window.checkReset2 = function() {
+  const val = document.getElementById('resetInput2').value.trim().toUpperCase();
+  const btn = document.getElementById('resetNext2');
+  if (val === 'EVET SİL' || val === 'EVET SIL') {
+    btn.classList.add('ready');
+  } else {
+    btn.classList.remove('ready');
+  }
+};
+
+window.executeFullReset = function() {
+  const val = document.getElementById('resetInput2').value.trim().toUpperCase();
+  if (val !== 'EVET SİL' && val !== 'EVET SIL') return;
+
+  // Tüm verileri sıfırla
+  HABITS.length = 0;
+  HABITS.push(
+    { id:'sport',  cls:'sport',  name:'Spor',  emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[0,0,0,0,0,0,0] },
+    { id:'read',   cls:'read',   name:'Okuma', emoji:'📚', desc:'Kitap & öğrenme',    color:'#3ECFB2', week:[0,0,0,0,0,0,0] },
+    { id:'guitar', cls:'guitar', name:'Gitar', emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,0,0,0,0,0,0] }
+  );
+
+  // localStorage temizle (varsa)
+  try { localStorage.clear(); } catch(e) {}
+
+  // Kartları yeniden çiz
+  document.getElementById('pcCards').innerHTML  = '';
+  document.getElementById('mobCards').innerHTML = '';
+  buildPcCards(); buildMobCards(); refreshGlobal();
+  requestAnimationFrame(() => { buildChart('pc', false); buildChart('mob', false); });
+
+  closeResetModal();
+
+  // Başarı bildirimi
+  const badge = document.getElementById('syncBadge');
+  const dot   = document.getElementById('syncDot');
+  const txt   = document.getElementById('syncText');
+  if (badge) {
+    dot.className = 'sync-dot';
+    txt.textContent = '🗑️ Tüm veriler sıfırlandı';
+    badge.classList.add('show');
+    badge.style.display = 'flex';
+    setTimeout(() => { badge.classList.remove('show'); badge.style.display = ''; }, 3500);
+  }
+};
+
+// Modal dışına tıklama ile kapat
+document.getElementById('resetConfirmModal').addEventListener('click', function(e) {
+  if (e.target === this) closeResetModal();
+});
+
+
+/* ── AUTH UI ── */
+window.switchAuthTab = function(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('authTabLogin').classList.toggle('active', isLogin);
+  document.getElementById('authTabRegister').classList.toggle('active', !isLogin);
+  document.getElementById('authNameField').style.display = isLogin ? 'none' : '';
+  document.getElementById('authSubmitBtn').textContent = isLogin ? 'Giriş Yap' : 'Hesap Oluştur';
+  document.getElementById('authError').classList.remove('show');
+  document.getElementById('authError').textContent = '';
+};
+
+window.submitAuth = async function() {
+  const btn = document.getElementById('authSubmitBtn');
+  const errEl = document.getElementById('authError');
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const isLogin = !document.getElementById('authTabRegister').classList.contains('active');
+  const name = document.getElementById('authName')?.value.trim();
+
+  errEl.classList.remove('show');
+
+  // ── Admin kontrolü ──────────────────────────────────
+  if (isLogin && email === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    enterAdminMode();
+    return;
+  }
+
+  if (!email || !password) { errEl.textContent = 'E-posta ve şifre gerekli.'; errEl.classList.add('show'); return; }
+  if (password.length < 6) { errEl.textContent = 'Şifre en az 6 karakter olmalı.'; errEl.classList.add('show'); return; }
+
+  btn.disabled = true;
+  btn.textContent = isLogin ? 'Giriş yapılıyor…' : 'Hesap oluşturuluyor…';
+  try {
+    if (isLogin) {
+      await signInWithEmailAndPassword(auth, email, password);
+    } else {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      if (name) await updateProfile(cred.user, { displayName: name });
+    }
+  } catch(e) {
+    const msgs = {
+      'auth/user-not-found':     'Bu e-posta adresi kayıtlı değil.',
+      'auth/wrong-password':     'Şifre yanlış.',
+      'auth/invalid-credential': 'E-posta veya şifre hatalı.',
+      'auth/email-already-in-use':'Bu e-posta zaten kayıtlı.',
+      'auth/invalid-email':      'Geçersiz e-posta adresi.',
+      'auth/too-many-requests':  'Çok fazla deneme. Lütfen bekleyin.',
+    };
+    errEl.textContent = msgs[e.code] || 'Bir hata oluştu: ' + e.message;
+    errEl.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = isLogin ? 'Giriş Yap' : 'Hesap Oluştur';
+  }
+};
+
+// Allow Enter key in auth form
+['authEmail','authPassword','authName'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') window.submitAuth(); });
+});
+
+/* ── EDIT MODE ── */
+window.toggleEditMode = function() {
+  const isNowOn = document.body.classList.toggle('edit-mode');
+  const txt = document.getElementById('editToggleText');
+  if (txt) txt.textContent = isNowOn ? '✅ Düzenlemeyi Bitir' : '✏️ Düzenleme Modu';
+};
+
+/* ── DELETE WITH CONFIRM ── */
+let pendingDeleteId = null;
+let deleteConfirmTimer = null;
+
+window.confirmDeleteHabit = function(id, name) {
+  pendingDeleteId = id;
+  const el = document.getElementById('deleteConfirm');
+  const txt = document.getElementById('deleteConfirmText');
+  if (txt) txt.textContent = '"' + name + '" silinsin mi?';
+  el.classList.add('show');
+  clearTimeout(deleteConfirmTimer);
+  deleteConfirmTimer = setTimeout(() => { el.classList.remove('show'); pendingDeleteId = null; }, 6000);
+};
+window.cancelDelete = function() {
+  document.getElementById('deleteConfirm').classList.remove('show');
+  pendingDeleteId = null;
+};
+document.getElementById('deleteConfirmYes').addEventListener('click', function() {
+  if (pendingDeleteId) { deleteHabit(pendingDeleteId); document.getElementById('deleteConfirm').classList.remove('show'); }
+});
+
+/* ── COLOR CHANGE ── */
+window.openColorPicker = function(id) {
+  const h = HABITS.find(hh=>hh.id===id);
+  if (!h) return;
+  // Reuse habit modal but only show color
+  modalSelectedColor = h.color;
+  modalSelectedEmoji = h.emoji;
+  document.getElementById('modalName').value = h.name;
+  document.getElementById('modalDesc').value = h.desc;
+  document.getElementById('modalTitleText').textContent = h.name + ' — Renk Seç';
+  const eg = document.getElementById('emojiGrid');
+  eg.innerHTML = EMOJI_LIST.map(e=>`<button class="emoji-btn${e===h.emoji?' selected':''}" onclick="selectEmoji('${e}',this)">${e}</button>`).join('');
+  const cg = document.getElementById('colorGrid');
+  cg.innerHTML = COLOR_LIST.map(c=>`<div class="color-swatch${c===h.color?' selected':''}" style="background:${c}" onclick="selectColor('${c}',this)"></div>`).join('');
+  // Override save to update existing
+  window._editingHabitId = id;
+  document.getElementById('habitModal').classList.add('open');
+};
+
+
 buildPcCards();
 buildMobCards();
 refreshGlobal();
