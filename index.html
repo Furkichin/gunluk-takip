@@ -935,6 +935,96 @@ body.demo-mode #demoBadge { display: flex; }
 body.demo-mode #syncBadge { display: none !important; }
 
 /* ═══════════════════════════════════════════
+   TUTORIAL / ONBOARDING
+═══════════════════════════════════════════ */
+#tutorialOverlay {
+  position: fixed; inset: 0; z-index: 9600;
+  background: rgba(0,0,0,0.62); backdrop-filter: blur(2px);
+  opacity: 0; pointer-events: none; transition: opacity 0.35s;
+}
+#tutorialOverlay.active { opacity: 1; }
+
+#tutorialCard {
+  position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%);
+  width: 390px; max-width: calc(100vw - 24px);
+  background: var(--panel); border: 1px solid rgba(167,139,250,0.35);
+  border-radius: 24px; padding: 26px 28px 22px;
+  box-shadow: 0 28px 64px rgba(0,0,0,0.65), 0 0 0 1px rgba(167,139,250,0.08);
+  z-index: 9602; display: none;
+}
+#tutorialCard.active { display: block; animation: tutCardIn 0.32s cubic-bezier(.4,2,.55,1) both; }
+@keyframes tutCardIn {
+  from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0);    opacity: 1; }
+}
+.tut-emoji { font-size: 30px; margin-bottom: 10px; display: block; }
+.tut-title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 6px; letter-spacing: -.3px; }
+.tut-body  { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+.tut-progress { display: flex; gap: 5px; align-items: center; margin-bottom: 14px; }
+.tut-dot { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.12); flex-shrink: 0; width: 20px; transition: all 0.3s; }
+.tut-dot.active { background: var(--guitar); width: 28px; }
+.tut-dot.done   { background: rgba(167,139,250,0.4); }
+.tut-actions { display: flex; align-items: center; gap: 10px; }
+.tut-skip { font-size: 12px; color: var(--muted); background: none; border: none; font-family: "DM Sans",sans-serif; cursor: pointer; padding: 2px 4px; flex-shrink: 0; }
+.tut-skip:hover { color: var(--text); }
+.tut-next { flex: 1; padding: 11px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--guitar), #6D28D9); color: white; font-size: 13px; font-weight: 800; font-family: "DM Sans",sans-serif; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
+.tut-next:hover { opacity: 0.9; transform: translateY(-1px); }
+
+#tutorialBeacon {
+  position: fixed; z-index: 9601; pointer-events: none;
+  border-radius: 50%; border: 2.5px solid rgba(167,139,250,0.9);
+  transform: translate(-50%, -50%); display: none;
+  animation: beaconRing 1.8s ease-out infinite;
+}
+@keyframes beaconRing {
+  0%  { box-shadow: 0 0 0 0    rgba(167,139,250,0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(167,139,250,0);   }
+  100%{ box-shadow: 0 0 0 0    rgba(167,139,250,0);   }
+}
+#tutorialBeacon.active { display: block; }
+
+/* ═══════════════════════════════════════════
+   ADMIN USERS MODAL
+═══════════════════════════════════════════ */
+#adminUsersModal {
+  position: fixed; inset: 0; z-index: 9800;
+  background: rgba(0,0,0,0.72); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+#adminUsersModal.open { opacity: 1; pointer-events: all; }
+.admin-users-box {
+  width: 660px; max-width: 96vw; max-height: 86vh;
+  background: var(--panel); border: 1px solid rgba(255,80,80,0.25);
+  border-radius: 24px; padding: 28px 28px 22px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.65);
+  display: flex; flex-direction: column;
+  animation: adminModalIn 0.28s cubic-bezier(.4,2,.6,1) both;
+}
+.admin-users-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; flex-shrink: 0; }
+.admin-users-title  { font-size: 18px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 9px; }
+.admin-users-close  { width: 32px; height: 32px; border-radius: 9px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.admin-users-close:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+.admin-users-count  { font-size: 11px; color: var(--muted); margin-bottom: 14px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; }
+.admin-users-list   { overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 8px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; }
+.admin-users-list::-webkit-scrollbar { width: 4px; }
+.admin-users-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+.user-row { display: flex; align-items: center; gap: 14px; background: var(--panel2); border-radius: 14px; padding: 12px 16px; border: 1px solid var(--border); transition: border-color 0.2s; }
+.user-row:hover { border-color: rgba(255,255,255,0.11); }
+.user-row-avatar  { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--guitar), #6D28D9); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: white; }
+.user-row-info    { flex: 1; overflow: hidden; min-width: 0; }
+.user-row-name    { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-row-email   { font-size: 11px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-row-meta    { font-size: 10px; color: rgba(255,255,255,0.2); margin-top: 3px; }
+.user-row-delete  { padding: 6px 12px; border-radius: 9px; border: 1px solid rgba(255,80,80,0.25); background: rgba(255,80,80,0.08); color: rgba(255,107,107,0.65); font-size: 11px; font-weight: 700; font-family: "DM Sans",sans-serif; cursor: pointer; transition: all 0.2s; flex-shrink: 0; white-space: nowrap; }
+.user-row-delete:hover      { background: rgba(255,80,80,0.22); color: #FF6B6B; border-color: rgba(255,80,80,0.5); }
+.user-row-delete.confirming { background: rgba(255,80,80,0.28); color: #FF6B6B; border-color: #FF6B6B; }
+.admin-users-empty   { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.admin-users-loading { text-align: center; padding: 40px; color: var(--muted); font-size: 13px; }
+.admin-refresh-btn   { padding: 4px 11px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; font-weight: 600; font-family: "DM Sans",sans-serif; cursor: pointer; transition: all 0.2s; }
+.admin-refresh-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+/* ═══════════════════════════════════════════
    ADMİN PANELİ (Sidebar içinde)
 ═══════════════════════════════════════════ */
 #adminPanel {
@@ -1143,6 +1233,9 @@ body.demo-mode #adminPanelMob { display: block; }
     <!-- Admin Paneli -->
     <div id="adminPanel">
       <div class="admin-panel-title">🔐 Admin Paneli</div>
+      <button class="btn-reset-all" style="margin-bottom:8px" onclick="openAdminUsers()">
+        👥 Kullanıcıları Görüntüle
+      </button>
       <button class="btn-reset-all" onclick="openResetModal()">
         🗑️ Tüm Verileri Sıfırla
       </button>
@@ -1486,6 +1579,7 @@ body.demo-mode #adminPanelMob { display: block; }
     <!-- Mobil Admin Paneli -->
     <div id="adminPanelMob">
       <div class="admin-panel-title" style="font-size:10px;color:rgba(255,107,107,0.7);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;">🔐 Admin Paneli</div>
+      <button class="btn-reset-all" style="margin-bottom:8px" onclick="openAdminUsers()">👥 Kullanıcıları Görüntüle</button>
       <button class="btn-reset-all" onclick="openResetModal()">🗑️ Tüm Verileri Sıfırla</button>
     </div>
 
@@ -1532,10 +1626,41 @@ body.demo-mode #adminPanelMob { display: block; }
   </div>
 </div>
 
+<!-- ████████ TUTORIAL / ONBOARDING ████████ -->
+<div id="tutorialOverlay"></div>
+<div id="tutorialCard">
+  <span class="tut-emoji" id="tutEmoji">👋</span>
+  <div class="tut-title"  id="tutTitle"></div>
+  <div class="tut-body"   id="tutBody"></div>
+  <div class="tut-progress" id="tutProgress"></div>
+  <div class="tut-actions">
+    <button class="tut-skip" id="tutSkipBtn" onclick="skipTutorial()">Geç</button>
+    <button class="tut-next" id="tutNextBtn" onclick="nextTutStep()">Başla →</button>
+  </div>
+</div>
+<div id="tutorialBeacon"></div>
+
+<!-- ████████ ADMIN USERS MODAL ████████ -->
+<div id="adminUsersModal">
+  <div class="admin-users-box">
+    <div class="admin-users-header">
+      <div class="admin-users-title">👥 Kullanıcılar</div>
+      <button class="admin-users-close" onclick="closeAdminUsers()">✕</button>
+    </div>
+    <div class="admin-users-count" id="adminUsersCount">
+      <span id="adminUsersCountText">Yükleniyor…</span>
+      <button class="admin-refresh-btn" onclick="loadAdminUsers()">↻ Yenile</button>
+    </div>
+    <div class="admin-users-list" id="adminUsersList">
+      <div class="admin-users-loading">Kullanıcılar yükleniyor…</div>
+    </div>
+  </div>
+</div>
+
 <!-- ████████ FIREBASE + LOGIC ████████ -->
 <script type="module">
 import { initializeApp }                              from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -1570,9 +1695,6 @@ function getDocRef() {
 let DOC_REF = null;
 
 const HABITS = [
-  { id:'sport',  cls:'sport',  name:'Spor',  emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[0,0,0,0,0,0,0] },
-  { id:'read',   cls:'read',   name:'Okuma', emoji:'📚', desc:'Kitap & öğrenme',    color:'#3ECFB2', week:[0,0,0,0,0,0,0] },
-  { id:'guitar', cls:'guitar', name:'Gitar', emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,0,0,0,0,0,0] },
 ];
 
 /* ── TAB SWITCH (mobile) - defined later in stats section ── */
@@ -1597,7 +1719,23 @@ async function loadUserData() {
   DOC_REF = getDocRef();
   if (!DOC_REF) return;
   try {
+    // Save/update user profile for admin visibility
+    try {
+      const profileRef = doc(db, 'userProfiles', currentUser.uid);
+      const profileSnap = await getDoc(profileRef);
+      const profileData = {
+        displayName: currentUser.displayName || '',
+        email: currentUser.email || '',
+        uid: currentUser.uid,
+        lastSeen: new Date().toISOString(),
+      };
+      if (!profileSnap.exists()) profileData.createdAt = new Date().toISOString();
+      setDoc(profileRef, profileData, { merge: true }); // fire-and-forget
+    } catch(e) {}
+
     const snap = await getDoc(DOC_REF);
+    const isNewUser = !snap.exists();
+
     if (snap.exists()) {
       applyData(snap.data());
       HABITS.filter(h=>h.cls==='custom').forEach((h,i)=>{ addPcCard(h,i); addMobCard(h,i); });
@@ -1605,6 +1743,12 @@ async function loadUserData() {
     }
     hideLoading();
     buildChart('pc', false); buildChart('mob', false);
+
+    // Show tutorial for brand new users
+    if (isNewUser && !localStorage.getItem('habit_tour_' + currentUser.uid)) {
+      setTimeout(() => window.startTutorial(), 800);
+    }
+
     if (unsubscribeSnapshot) unsubscribeSnapshot();
     unsubscribeSnapshot = onSnapshot(DOC_REF, snap => {
       if (snap.exists() && !snap.metadata.hasPendingWrites) {
@@ -1656,11 +1800,6 @@ window.logoutUser = async function() {
   await signOut(auth);
   // Reset state
   HABITS.length = 0;
-  HABITS.push(
-    { id:'sport',  cls:'sport',  name:'Spor',  emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[0,0,0,0,0,0,0] },
-    { id:'read',   cls:'read',   name:'Okuma', emoji:'📚', desc:'Kitap & öğrenme',    color:'#3ECFB2', week:[0,0,0,0,0,0,0] },
-    { id:'guitar', cls:'guitar', name:'Gitar', emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,0,0,0,0,0,0] }
-  );
   document.getElementById('pcCards').innerHTML = '';
   document.getElementById('mobCards').innerHTML = '';
   document.body.classList.remove('edit-mode');
@@ -2762,11 +2901,6 @@ function exitAdminMode() {
   document.body.classList.remove('edit-mode');
 
   HABITS.length = 0;
-  HABITS.push(
-    { id:'sport',  cls:'sport',  name:'Spor',  emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[0,0,0,0,0,0,0] },
-    { id:'read',   cls:'read',   name:'Okuma', emoji:'📚', desc:'Kitap & öğrenme',    color:'#3ECFB2', week:[0,0,0,0,0,0,0] },
-    { id:'guitar', cls:'guitar', name:'Gitar', emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,0,0,0,0,0,0] }
-  );
   document.getElementById('pcCards').innerHTML  = '';
   document.getElementById('mobCards').innerHTML = '';
 
@@ -2826,11 +2960,6 @@ window.executeFullReset = function() {
 
   // Tüm verileri sıfırla
   HABITS.length = 0;
-  HABITS.push(
-    { id:'sport',  cls:'sport',  name:'Spor',  emoji:'🏋️', desc:'Egzersiz & hareket', color:'#FF6B6B', week:[0,0,0,0,0,0,0] },
-    { id:'read',   cls:'read',   name:'Okuma', emoji:'📚', desc:'Kitap & öğrenme',    color:'#3ECFB2', week:[0,0,0,0,0,0,0] },
-    { id:'guitar', cls:'guitar', name:'Gitar', emoji:'🎸', desc:'Pratik & ezber',     color:'#A78BFA', week:[0,0,0,0,0,0,0] }
-  );
 
   // localStorage temizle (varsa)
   try { localStorage.clear(); } catch(e) {}
@@ -2970,6 +3099,223 @@ window.openColorPicker = function(id) {
   document.getElementById('habitModal').classList.add('open');
 };
 
+
+/* ══════════════════════════════════════════════════════
+   TUTORIAL / ONBOARDING SİSTEMİ
+══════════════════════════════════════════════════════ */
+const TUTORIAL_STEPS = [
+  {
+    emoji: '👋',
+    title: "Habit.io'ya Hoş Geldin!",
+    body: 'Günlük alışkanlıklarını takip ederek daha düzenli bir hayat kurabilirsin. Sana uygulamayı hızlıca gösterelim — sadece 1 dakika sürecek.',
+    beacon: null, beaconMob: null,
+    nextLabel: 'Başla →', isLast: false,
+  },
+  {
+    emoji: '➕',
+    title: 'İlk Alışkanlığını Ekle',
+    body: 'Alttaki "+ Yeni Alışkanlık Ekle" butonuna tıkla. Alışkanlığa bir isim, açıklama, emoji ve renk seçebilirsin. Dilediğin kadar alışkanlık ekleyebilirsin.',
+    beacon: '.btn-add-habit', beaconMob: '.mob-btn-add-habit',
+    nextLabel: 'Anladım →', isLast: false,
+  },
+  {
+    emoji: '✅',
+    title: '"Yaptım" ile İşaretle',
+    body: 'Her gün tamamladığın alışkanlığın yanındaki "Yaptım" butonuna bas. Haftanın her günü için ayrı ayrı işaretleyebilirsin. Veriler otomatik kaydedilir.',
+    beacon: null, beaconMob: null,
+    nextLabel: 'Devam →', isLast: false,
+  },
+  {
+    emoji: '✏️',
+    title: 'Düzenleme Modu',
+    body: '"Düzenleme Modu" butonunu açınca her alışkanlığı silebilir, renk ve emojisini değiştirebilirsin. Bitince tekrar tıklayarak düzenlemeyi kapat.',
+    beacon: '#editToggleBtn', beaconMob: null,
+    nextLabel: 'Devam →', isLast: false,
+  },
+  {
+    emoji: '📊',
+    title: 'İstatistikler & Grafikler',
+    body: '"İstatistik" sekmesinde haftalık grafik, 16 haftalık ısı haritası, alışkanlık karşılaştırması ve streak geçmişini görebilirsin.',
+    beacon: '#navBtnStats', beaconMob: '#navStats',
+    nextLabel: 'Devam →', isLast: false,
+  },
+  {
+    emoji: '🔥',
+    title: 'Streak — Seri Takibi',
+    body: 'Her gün tüm alışkanlıklarını tamamladığında serin artar. Soldaki "Seri" kartında güncel durumunu görebilirsin. Seriyi kırmamak harika bir motivasyon!',
+    beacon: '#streakBox', beaconMob: '#mobStreakBox',
+    nextLabel: 'Devam →', isLast: false,
+  },
+  {
+    emoji: '🎉',
+    title: 'Hazırsın!',
+    body: 'Tebrikler, her şeyi öğrendin! Alışkanlıklarını ekleyip her gün işaretlemeye başla. Küçük adımlar büyük değişimleri başlatır. Başarılar! 💜',
+    beacon: null, beaconMob: null,
+    nextLabel: '🚀 Hadi Başlayalım!', isLast: true,
+  },
+];
+
+let tutStep = 0, tutActive = false, tutUserId = null;
+
+window.startTutorial = function() {
+  if (IS_DEMO) return;
+  tutStep = 0; tutActive = true;
+  tutUserId = currentUser?.uid;
+  renderTutStep();
+};
+
+function renderTutStep() {
+  const step    = TUTORIAL_STEPS[tutStep];
+  const overlay = document.getElementById('tutorialOverlay');
+  const card    = document.getElementById('tutorialCard');
+  overlay.classList.add('active');
+  card.classList.remove('active');
+  void card.offsetWidth;
+  card.classList.add('active');
+  document.getElementById('tutEmoji').textContent   = step.emoji;
+  document.getElementById('tutTitle').textContent   = step.title;
+  document.getElementById('tutBody').textContent    = step.body;
+  document.getElementById('tutNextBtn').textContent = step.nextLabel;
+  document.getElementById('tutSkipBtn').style.display = step.isLast ? 'none' : '';
+  const prog = document.getElementById('tutProgress');
+  prog.innerHTML = TUTORIAL_STEPS.map((_, i) =>
+    `<div class="tut-dot ${i < tutStep ? 'done' : i === tutStep ? 'active' : ''}"></div>`
+  ).join('');
+  const isMob    = window.innerWidth < 768;
+  const beaconSel = isMob && step.beaconMob !== undefined ? step.beaconMob : step.beacon;
+  positionTutBeacon(beaconSel);
+}
+
+function positionTutBeacon(selector) {
+  const beacon = document.getElementById('tutorialBeacon');
+  if (!selector) { beacon.classList.remove('active'); return; }
+  const el = document.querySelector(selector);
+  if (!el || el.offsetParent === null) { beacon.classList.remove('active'); return; }
+  const rect = el.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height) + 24;
+  beacon.style.left   = (rect.left + rect.width  / 2) + 'px';
+  beacon.style.top    = (rect.top  + rect.height / 2) + 'px';
+  beacon.style.width  = size + 'px';
+  beacon.style.height = size + 'px';
+  beacon.classList.add('active');
+}
+
+window.nextTutStep = function() {
+  if (TUTORIAL_STEPS[tutStep].isLast) { finishTutorial(); return; }
+  tutStep++;
+  if (tutStep >= TUTORIAL_STEPS.length) { finishTutorial(); return; }
+  renderTutStep();
+};
+window.skipTutorial = finishTutorial;
+
+function finishTutorial() {
+  tutActive = false;
+  document.getElementById('tutorialOverlay').classList.remove('active');
+  document.getElementById('tutorialCard').classList.remove('active');
+  document.getElementById('tutorialBeacon').classList.remove('active');
+  if (tutUserId) localStorage.setItem('habit_tour_' + tutUserId, '1');
+}
+
+/* ══════════════════════════════════════════════════════
+   ADMİN — KULLANICI YÖNETİMİ
+══════════════════════════════════════════════════════ */
+const FB_PROJECT = 'habit-tracker-d7407';
+const FB_API_KEY = 'AIzaSyB_LIvcHXc1xyeIs-je-553eUx1OlkPfLc';
+
+window.openAdminUsers = function() {
+  document.getElementById('adminUsersModal').classList.add('open');
+  loadAdminUsers();
+};
+window.closeAdminUsers = function() {
+  document.getElementById('adminUsersModal').classList.remove('open');
+};
+
+window.loadAdminUsers = async function() {
+  const listEl  = document.getElementById('adminUsersList');
+  const countEl = document.getElementById('adminUsersCountText');
+  listEl.innerHTML = '<div class="admin-users-loading">⏳ Yükleniyor…</div>';
+  countEl.textContent = 'Yükleniyor…';
+  try {
+    let docs = [];
+    if (currentUser && !IS_DEMO) {
+      // Authenticated read via SDK
+      const snap = await getDocs(collection(db, 'userProfiles'));
+      snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+    } else {
+      // REST API fallback (requires open Firestore rules for userProfiles)
+      const url = `https://firestore.googleapis.com/v1/projects/${FB_PROJECT}/databases/(default)/documents/userProfiles?key=${FB_API_KEY}&pageSize=200`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      (json.documents || []).forEach(d => {
+        const f = d.fields || {};
+        const uid = d.name.split('/').pop();
+        docs.push({
+          id: uid, uid,
+          displayName: f.displayName?.stringValue || '',
+          email:       f.email?.stringValue       || '',
+          createdAt:   f.createdAt?.stringValue   || '',
+          lastSeen:    f.lastSeen?.stringValue    || '',
+        });
+      });
+    }
+    docs.sort((a, b) => (b.lastSeen || '').localeCompare(a.lastSeen || ''));
+    countEl.textContent = docs.length + ' kullanıcı';
+    if (docs.length === 0) {
+      listEl.innerHTML = '<div class="admin-users-empty">Henüz kayıtlı kullanıcı profili yok.<br><small style="color:rgba(255,255,255,0.18);margin-top:8px;display:block">Kullanıcılar giriş yaptıkça burada görünürler.</small></div>';
+      return;
+    }
+    listEl.innerHTML = '';
+    docs.forEach(u => {
+      const initials = ((u.displayName || u.email || '?').trim().split(' ').map(w=>w[0]).join('').slice(0,2) || '?').toUpperCase();
+      const joined   = u.createdAt ? new Date(u.createdAt).toLocaleDateString('tr-TR') : '—';
+      const seen     = u.lastSeen  ? new Date(u.lastSeen).toLocaleDateString('tr-TR', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+      const row = document.createElement('div');
+      row.className = 'user-row'; row.id = 'user-row-' + u.id;
+      row.innerHTML = `
+        <div class="user-row-avatar">${initials}</div>
+        <div class="user-row-info">
+          <div class="user-row-name">${u.displayName || '(isimsiz)'}</div>
+          <div class="user-row-email">${u.email}</div>
+          <div class="user-row-meta">Katıldı: ${joined} &nbsp;·&nbsp; Son görülme: ${seen}</div>
+        </div>
+        <button class="user-row-delete" onclick="deleteUserData('${u.id}', this)">🗑 Sil</button>`;
+      listEl.appendChild(row);
+    });
+  } catch(e) {
+    listEl.innerHTML = `<div class="admin-users-empty">❌ Kullanıcılar yüklenemedi.<br>
+      <small style="color:rgba(255,255,255,0.2);margin-top:8px;display:block">Firestore kurallarında <b>userProfiles</b> koleksiyonuna okuma izni gereklidir.<br>Hata: ${e.message}</small></div>`;
+    countEl.textContent = 'Yükleme hatası';
+  }
+};
+
+window.deleteUserData = async function(uid, btn) {
+  if (!btn.classList.contains('confirming')) {
+    btn.classList.add('confirming');
+    const orig = btn.textContent;
+    btn.textContent = '❗ Emin misin?';
+    setTimeout(() => { if(btn.classList.contains('confirming')){ btn.classList.remove('confirming'); btn.textContent = orig; } }, 3500);
+    return;
+  }
+  btn.textContent = '⏳'; btn.disabled = true;
+  try {
+    // Delete via REST (works unauthenticated if rules allow)
+    await fetch(`https://firestore.googleapis.com/v1/projects/${FB_PROJECT}/databases/(default)/documents/userProfiles/${uid}?key=${FB_API_KEY}`, { method: 'DELETE' });
+    // Also try SDK
+    try { if (currentUser && !IS_DEMO) await deleteDoc(doc(db, 'userProfiles', uid)); } catch(e2) {}
+    document.getElementById('user-row-' + uid)?.remove();
+    const rem = document.querySelectorAll('.user-row').length;
+    document.getElementById('adminUsersCountText').textContent = rem + ' kullanıcı';
+    if (rem === 0) document.getElementById('adminUsersList').innerHTML = '<div class="admin-users-empty">Tüm kullanıcılar silindi.</div>';
+  } catch(e) {
+    btn.textContent = '❌ Hata';
+    setTimeout(() => { btn.disabled = false; btn.textContent = '🗑 Sil'; btn.classList.remove('confirming'); }, 2000);
+  }
+};
+
+document.getElementById('adminUsersModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAdminUsers();
+});
 
 buildPcCards();
 buildMobCards();
