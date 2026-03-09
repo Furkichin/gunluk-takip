@@ -1786,13 +1786,9 @@ async function loadUserData() {
     });
   } catch(e) {
     console.error('loadUserData error:', e);
-    // Eğer kullanıcı giriş yapmışsa ama veri yüklenemezse, boş ekran yerine
-    // uygulamayı sıfırla ve auth ekranını göster
-    if (currentUser) {
-      try { await signOut(auth); } catch(e2) {}
-      currentUser = null;
-    }
-    showAuthScreen();
+    // Veri yüklenemese bile kullanıcı giriş yapmış sayılır, uygulamayı göster
+    hideLoading();
+    buildChart('pc', false); buildChart('mob', false);
   }
 }
 
@@ -1822,7 +1818,8 @@ function initFirebase() {
 }
 
 function showApp(user) {
-  document.getElementById('authScreen').classList.add('hidden');
+  const as = document.getElementById('authScreen');
+  if (as) { as.classList.add('hidden'); as.style.display = 'none'; }
   // Update user UI
   const name = user.displayName || user.email.split('@')[0];
   const initials = name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
