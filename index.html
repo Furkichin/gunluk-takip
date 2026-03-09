@@ -1670,7 +1670,7 @@ body.demo-mode #adminPanelMob { display: block; }
 <script type="module">
 import { initializeApp }                              from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyB_LIvcHXc1xyeIs-je-553eUx1OlkPfLc",
@@ -1688,8 +1688,14 @@ const googleProvider = new GoogleAuthProvider();
 let currentUser = null;
 
 window.signInWithGoogle = async function() {
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
   try {
-    await signInWithPopup(auth, googleProvider);
+    if (isMobile) {
+      await signInWithRedirect(auth, googleProvider);
+      // Sayfa yeniden yüklenecek, getRedirectResult initFirebase'de yakalanacak
+    } else {
+      await signInWithPopup(auth, googleProvider);
+    }
   } catch(e) {
     const errEl = document.getElementById('authError');
     errEl.textContent = e.code === 'auth/popup-closed-by-user' ? 'Giriş penceresi kapatıldı.' : 'Google girişi başarısız: ' + e.message;
@@ -1782,6 +1788,8 @@ async function loadUserData() {
 }
 
 function initFirebase() {
+  // Mobil Google redirect dönüşünü yakala
+  getRedirectResult(auth).catch(() => {});
   onAuthStateChanged(auth, user => {
     if (user) {
       currentUser = user;
