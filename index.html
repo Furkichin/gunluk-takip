@@ -705,7 +705,7 @@ body {
   display: flex; align-items: center; justify-content: center;
   transition: opacity 0.5s ease;
 }
-#authScreen.hidden { opacity: 0; pointer-events: none; }
+#authScreen.hidden { opacity: 0; pointer-events: none; display: none; }
 .auth-box {
   width: 400px; max-width: 92vw;
   background: var(--panel); border: 1px solid var(--border);
@@ -1112,7 +1112,7 @@ body.demo-mode #adminPanelMob { display: block; }
 <body>
 
 <!-- ████████ AUTH SCREEN ████████ -->
-<div id="authScreen">
+<div id="authScreen" class="hidden">
   <div class="auth-box">
     <div class="auth-logo" id="authLogo" style="cursor:default;user-select:none">Habit<span>.</span>io</div>
     <div class="auth-tagline">Alışkanlıklarını takip et, hayatını dönüştür.</div>
@@ -1784,13 +1784,32 @@ async function loadUserData() {
         refreshAll();
       }
     });
-  } catch(e) { console.error(e); hideLoading(); }
+  } catch(e) {
+    console.error('loadUserData error:', e);
+    // Eğer kullanıcı giriş yapmışsa ama veri yüklenemezse, boş ekran yerine
+    // uygulamayı sıfırla ve auth ekranını göster
+    if (currentUser) {
+      try { await signOut(auth); } catch(e2) {}
+      currentUser = null;
+    }
+    showAuthScreen();
+  }
 }
 
 function initFirebase() {
-  // Mobil Google redirect dönüşünü yakala
+  // Güvenlik timeout: Firebase 10 saniyede cevap vermezse auth ekranını göster
+  const authTimeout = setTimeout(() => {
+    if (document.getElementById('loadingOverlay')) {
+      console.warn('Firebase timeout - showing auth screen');
+      showAuthScreen();
+    }
+  }, 10000);
+
+  // Mobil Google redirect dönüşünü yakala (hata yutulsun)
   getRedirectResult(auth).catch(() => {});
+
   onAuthStateChanged(auth, user => {
+    clearTimeout(authTimeout);
     if (user) {
       currentUser = user;
       showApp(user);
@@ -1819,8 +1838,10 @@ function showApp(user) {
 }
 
 function showAuthScreen() {
-  document.getElementById('authScreen').classList.remove('hidden');
-  document.getElementById('loadingOverlay')?.classList.add('hidden');
+  const as = document.getElementById('authScreen');
+  if (as) { as.classList.remove('hidden'); as.style.display = 'flex'; }
+  const lo = document.getElementById('loadingOverlay');
+  if (lo) { lo.classList.add('hidden'); setTimeout(()=>{ try{lo.remove()}catch(e){} },500); }
 }
 
 window.logoutUser = async function() {
